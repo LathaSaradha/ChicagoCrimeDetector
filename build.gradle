@@ -1,5 +1,13 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+allprojects {
+    wrapper {
+        gradleVersion = '5.6.2'
+    }
 }
 
 group 'org.example'
@@ -14,3 +22,9 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+javafx {
+    version = "13"
+    modules = [ 'javafx.controls' ]
+}
+
+mainClassName = 'Main'
