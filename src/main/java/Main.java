@@ -15,6 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         primaryStage.setTitle("Crime Detector");
         button = new Button("Percentage of Last Week Crimes");
 
@@ -23,7 +24,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(layout,300,250);
         primaryStage.setScene(scene);
-        primaryStage.show();
+       primaryStage.show();
 
         FileReader fr= new FileReader("Crimes2018.csv");
         fr.readFile();

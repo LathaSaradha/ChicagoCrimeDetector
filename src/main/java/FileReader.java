@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class FileReader
 {
 
@@ -25,12 +27,10 @@ public class FileReader
         try(Stream<String> lines= Files.lines(path))
         {
 
-            lines
-                    .map(s->s.split(","))
-                   // .map()
-                   .forEach(System.out::println);
-
-           // System.out.println(count);
+         List<String[]> list= lines.map(s->s.split(","))
+                    .collect(toList());
+            System.out.println(list.size());
+            System.out.println(list.get(1).length);
 
         } catch (IOException e) {
             e.printStackTrace();
