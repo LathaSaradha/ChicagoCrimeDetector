@@ -4,6 +4,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 
 public class Main extends Application {
     Button button;
@@ -22,5 +24,8 @@ public class Main extends Application {
         Scene scene = new Scene(layout,300,250);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        FileReader fr= new FileReader("Crimes2018.csv");
+        fr.readFile();
     }
 }
