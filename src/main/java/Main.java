@@ -27,6 +27,11 @@ public class Main extends Application {
        primaryStage.show();
 
         FileReader fr= new FileReader("Crimes2018.csv");
-        fr.readFile();
+       // fr.readFile();
+
+      InputHBox hb= new InputHBox();
+        layout.getChildren().add(hb);
+      hb.addMoveButtonAction(fr);
+
     }
 }
