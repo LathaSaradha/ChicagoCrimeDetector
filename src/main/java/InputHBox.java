@@ -29,7 +29,7 @@ public class InputHBox extends HBox {
     private void createTextFields() {
         this.districtText = new TextField();
 
-        this.districtText.setPrefWidth(30);
+        this.districtText.setPrefWidth(40);
 
     }
 
