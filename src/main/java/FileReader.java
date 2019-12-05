@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -38,7 +37,8 @@ public class FileReader {
         return list;
     }
 
-    public void NumberofCrimesInaDistrict(String districtNum) {
+    public void numberofCrimesInaDistrict(String districtNum)
+    {
 
         List<String[]> list = readFile();
 
