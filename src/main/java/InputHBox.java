@@ -59,7 +59,7 @@ public class InputHBox extends HBox {
 
                 CharSequence districtNum =districtText.getCharacters();
 
-                fr.NumberofCrimesInaDistrict(districtNum+"");
+                fr.numberofCrimesInaDistrict(districtNum+"");
             }
         });
     }

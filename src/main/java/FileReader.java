@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -42,7 +41,8 @@ public class FileReader {
         return list;
     }
 
-    public void NumberofCrimesInaDistrict(String districtNum) {
+    public void numberofCrimesInaDistrict(String districtNum)
+    {
 
         List<String[]> list = readFile();
 
