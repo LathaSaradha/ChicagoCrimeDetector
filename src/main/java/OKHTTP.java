@@ -1,8 +1,9 @@
+import com.google.gson.stream.JsonReader;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.IOException;
+import java.io.*;
 
 
 public class OKHTTP
@@ -11,19 +12,32 @@ public class OKHTTP
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://data.cityofchicago.org/resource/ijzp-q8t2.csv")
+                .url("https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=id,date")
                 .get()
-//                .addHeader("User-Agent", "PostmanRuntime/7.20.1")
-//                .addHeader("Accept", "/")
-//                .addHeader("Cache-Control", "no-cache")
-//                .addHeader("Postman-Token", "ca6eb5f1-d0fd-40f4-9905-aff7ee38b6ea,b0bf6fda-a78f-4e95-b6f3-dc342bd8fdce")
-//                .addHeader("Host", "data.cityofchicago.org")
-//                .addHeader("Accept-Encoding", "gzip, deflate")
-//                .addHeader("Connection", "keep-alive")
-//                .addHeader("cache-control", "no-cache")
                 .build();
 
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        InputStream initialStream = new ByteArrayInputStream(response.body().string().getBytes());
+        Reader reader = new InputStreamReader(initialStream);
+        JsonReader jsonReader = new JsonReader(reader);
+        jsonReader.beginArray();
+        while (jsonReader.hasNext()) {
+            String name = null;
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()) {
+                name = jsonReader.nextName();
+                if (name.equals("id")) {
+                    System.out.println(name);
+                    System.out.println(jsonReader.nextString());
+                } else {
+                    jsonReader.skipValue();
+                }
+            }
+            jsonReader.endObject();
+        }
+            jsonReader.endArray();
+
+       // System.out.println( response.body().string());
+
     }
 }
