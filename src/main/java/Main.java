@@ -32,7 +32,7 @@ public class Main extends Application {
         button.setOnAction(e->PredictionChart.display());
 
 
-        //buttonForDistrict.setOnAction(e->PredictionChart.districtPercentage());
+        buttonForDistrict.setOnAction(e->PredictionChart.districtPercentage());
 
         Scene scene = new Scene(layout,300,250);
         primaryStage.setScene(scene);

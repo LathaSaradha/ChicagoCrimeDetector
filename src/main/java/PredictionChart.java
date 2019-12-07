@@ -3,6 +3,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,6 +49,21 @@ public class PredictionChart
         window.setScene(scene);
         window.setHeight(500);
         window.setWidth(1200);
+        window.showAndWait();
+    }
+
+    public static void districtPercentage(){
+
+        Stage window = new Stage();
+        System.out.println("inside districtPercentage");
+
+        InputHBox hb = new InputHBox();
+
+        StackPane layout = new StackPane();
+        layout.getChildren().add(hb);
+
+        Scene scene = new Scene(layout,400,200);
+        window.setScene(scene);
         window.showAndWait();
     }
 }

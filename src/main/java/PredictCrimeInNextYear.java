@@ -76,6 +76,33 @@ public class PredictCrimeInNextYear
 
     }
 
+    public static double numberofCrimesInaDistrict(CharSequence districtNum, CharSequence yearNum) {
+
+        int totalCount=0,districtCount=0;
+        System.out.println("inside numberofCrimesInaDistrict method");
+        System.out.println(districtNum +"  "+yearNum);
+        String year= yearNum+"";
+        String district= districtNum+"";
+        String query = "$select=count(*) as total_count where year="+year;
+
+        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year);
+        SendHttpRequest httpRequest = new SendHttpRequest(query);
+        Reader reader = httpRequest.sendHttpRequest();
+        totalCount = JsonParser.crimeCounter(reader,"total_count");
+
+        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year+" in district "+district);
+         query = "$select=count(*) as total_count_district where year="+year+" and District=\""+district+"\"";
+        httpRequest = new SendHttpRequest(query);
+         reader = httpRequest.sendHttpRequest();
+
+        districtCount = JsonParser.crimeCounter(reader,"total_count_district");
+        System.out.println(districtCount);
+        System.out.println(totalCount);
+        double percentage=((double)districtCount/totalCount) *100;
+        return percentage;
+
+    }
+
 //    public static void main(String[] args) {
 //        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
 //        System.out.println(predictCrimeInNextYear.getTotalCrimesInYears());

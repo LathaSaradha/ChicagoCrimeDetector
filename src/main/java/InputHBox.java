@@ -2,10 +2,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.text.DecimalFormat;
 
 public class InputHBox extends HBox {
     private Label districtLabel;
@@ -33,8 +40,8 @@ public class InputHBox extends HBox {
 
     private void createTextFields() {
         this.districtText = new TextField();
-        this.yearText =new TextField();
-       this.districtText.setPrefWidth(40);
+        this.yearText = new TextField();
+        this.districtText.setPrefWidth(40);
         this.yearText.setPrefWidth(40);
 
     }
@@ -48,27 +55,51 @@ public class InputHBox extends HBox {
         createTextFields();
         createMoveButton();
 
-        getChildren().addAll(this.districtLabel, this.districtText,this.yearText,this.YearLabel,
+        getChildren().addAll(this.districtLabel, this.districtText, this.yearText, this.YearLabel,
                 this.btnMove);
+
+        addMoveButtonAction();
     }
 
-    public void addMoveButtonAction(FileReader fr)
-    {
+    public void addMoveButtonAction() {
 
         btnMove.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+
+                                    System.out.println("inside handle method");
+                                    CharSequence districtNum = districtText.getCharacters();
+                                    CharSequence yearNum = yearText.getCharacters();
+
+                                    double percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
 
 
+                                    Stage dialogStage = new Stage();
+                                    dialogStage.initModality(Modality.WINDOW_MODAL);
+                                    Button okButton = new Button("OK");
+                                    okButton.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
+                                        @Override
+                                        public void handle(ActionEvent arg0) {
+                                            dialogStage.close();
+                                        }
 
+                                    });
+                                    String display = "Percentage of crimes in district " + districtNum + " in year " + yearNum + " is " + new DecimalFormat("#.##").format(percent) + " %";
+                                    VBox vbox = new VBox(new Text(display), okButton);
+                                    vbox.setAlignment(Pos.CENTER);
+                                    vbox.setPadding(new Insets(15));
 
-                CharSequence districtNum =districtText.getCharacters();
-                CharSequence yearNum= yearText.getCharacters();
+                                    dialogStage.setScene(new Scene(vbox));
+                                    dialogStage.show();
+                                    districtText.clear();
+                                    yearText.clear();
+                                }
 
-               //PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum,yearNum);
-            }
-        });
+                            }
+
+        );
+
     }
 
 }
