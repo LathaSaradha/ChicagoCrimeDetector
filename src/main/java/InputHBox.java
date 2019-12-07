@@ -9,8 +9,11 @@ import javafx.scene.control.TextField;
 
 public class InputHBox extends HBox {
     private Label districtLabel;
+    private Label YearLabel;
+
 
     private TextField districtText;
+    private TextField yearText;
 
     private Button btnMove;
 
@@ -23,13 +26,16 @@ public class InputHBox extends HBox {
 
     private void createLabels() {
         this.districtLabel = new Label("District");
+        this.YearLabel = new Label("Year");
         this.districtText = new TextField("District Number");
+        this.yearText = new TextField("Year");
     }
 
     private void createTextFields() {
         this.districtText = new TextField();
-
-        this.districtText.setPrefWidth(40);
+        this.yearText =new TextField();
+       this.districtText.setPrefWidth(40);
+        this.yearText.setPrefWidth(40);
 
     }
 
@@ -42,7 +48,7 @@ public class InputHBox extends HBox {
         createTextFields();
         createMoveButton();
 
-        getChildren().addAll(this.districtLabel, this.districtText,
+        getChildren().addAll(this.districtLabel, this.districtText,this.yearText,this.YearLabel,
                 this.btnMove);
     }
 
@@ -58,8 +64,9 @@ public class InputHBox extends HBox {
 
 
                 CharSequence districtNum =districtText.getCharacters();
+                CharSequence yearNum= yearText.getCharacters();
 
-                fr.numberofCrimesInaDistrict(districtNum+"");
+               //PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum,yearNum);
             }
         });
     }

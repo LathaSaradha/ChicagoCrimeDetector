@@ -4,25 +4,25 @@ import java.util.TreeMap;
 
 public class PredictCrimeInNextYear
 {
-    public  TreeMap<Integer,Integer> totalCrimesInEachYear;
+    public static TreeMap<Integer,Integer> totalCrimesInEachYear;
 
- public PredictCrimeInNextYear()
- {
-    int minYear = getMinYear();
-     int maxYear = getMaxYear();
-     totalCrimesInYear(minYear,maxYear);
- }
+    public PredictCrimeInNextYear()
+    {
+        int minYear = getMinYear();
+        int maxYear = getMaxYear();
+        totalCrimesInYear(minYear,maxYear);
+    }
 
- public  int getMinYear()
- {
-     int minYear = 0;
-     String getMinYearQuery = "$select=min(year) as min_year";
-     SendHttpRequest httpRequest = new SendHttpRequest(getMinYearQuery);
-     Reader reader = httpRequest.sendHttpRequest();
-     minYear = JsonParser.crimeCounter(reader,"min_year");
-     return minYear;
- }
-    public  int getMaxYear()
+    public static int getMinYear()
+    {
+        int minYear = 0;
+        String getMinYearQuery = "$select=min(year) as min_year";
+        SendHttpRequest httpRequest = new SendHttpRequest(getMinYearQuery);
+        Reader reader = httpRequest.sendHttpRequest();
+        minYear = JsonParser.crimeCounter(reader,"min_year");
+        return minYear;
+    }
+    public static int getMaxYear()
     {
         int maxYear = 0;
         String getMinYearQuery = "$select=max(year) as max_year";
@@ -32,12 +32,13 @@ public class PredictCrimeInNextYear
         return maxYear;
     }
 
-    public  void totalCrimesInYear(int minYear, int maxYear)
+    public static void totalCrimesInYear(int minYear, int maxYear)
     {
         int count = 0;
         TreeMap<Integer,Integer> totalCrimes= new TreeMap<>();
         for(int i =minYear;i<=maxYear;i++) {
             String totalCrimesQuery = "$select=count(id) as total_crime where year="+i;
+            System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+i);
             SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
             Reader reader = httpRequest.sendHttpRequest();
             count = JsonParser.crimeCounter(reader,"total_crime");
@@ -46,12 +47,12 @@ public class PredictCrimeInNextYear
         totalCrimesInEachYear = totalCrimes;
     }
 
-    public  TreeMap<Integer,Integer> getTotalCrimesInYears()
+    public static TreeMap<Integer,Integer> getTotalCrimesInYears()
     {
         return totalCrimesInEachYear;
     }
 
-    public  LinearRegression generateArraysForRegression()
+    public static LinearRegression generateArraysForRegression()
     {
         PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
         double[] x = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
@@ -67,7 +68,7 @@ public class PredictCrimeInNextYear
         return linearRegression;
     }
 
-    public  int predictTotalCrimes()
+    public static int predictTotalCrimes()
     {
         LinearRegression linearRegression = generateArraysForRegression();
         int predictedCrimes = (int) linearRegression.predict(2020);

@@ -7,7 +7,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 import java.util.Map;
 
 public class PredictionChart
@@ -22,32 +21,27 @@ public class PredictionChart
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("YEAR");
 
-
-
-
-
-
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Number of Crimes");
 
-
-
-
-
-      //  BarChart barChart = new BarChart(xAxis,yAxis);
         BarChart<String,Number> barChart = new BarChart<>(xAxis, yAxis);
         XYChart.Series<String,Number>  dataSeries = new XYChart.Series<>();
         dataSeries.setName("Total Crimes in Year");
 
-        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
 
-        int predictedIn2020 = predictCrimeInNextYear.predictTotalCrimes();
-        for(Map.Entry<Integer,Integer> pair : predictCrimeInNextYear.getTotalCrimesInYears().entrySet())
+        int predictedIn2020 = PredictCrimeInNextYear.predictTotalCrimes();
+
+        //Removing the checked exception for raw types.
+
+        for(Map.Entry<Integer,Integer> pair : PredictCrimeInNextYear.getTotalCrimesInYears().entrySet())
         {
             dataSeries.getData().add(new XYChart.Data<>(pair.getKey().toString(),pair.getValue()));
         }
+
+
         dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)",predictedIn2020));
         barChart.getData().add(dataSeries);
+
 
         VBox vBox = new VBox(barChart);
         Scene scene = new Scene(vBox,400,200);
