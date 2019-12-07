@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,8 +77,7 @@ public class FileReader {
         {
             if(listOfArea.get(i).equals(area))
             {
-                //System.out.print("Primary crime Type: ");
-                stringList.add(primaryType.get(i) + " " + "Description for the crime: " + stringList.add(description.get(j) + " /n" + "Location of the crime" + location.get(j)));
+                stringList.add(primaryType.get(i) + " \n" + "Description for the crime: " + stringList.add(description.get(j) + " \n" + "Location of the crime " + location.get(j)));
             }
         }
         System.out.println(stringList);

@@ -22,13 +22,15 @@ public class Main extends Application {
        // int predictedCrimes = PredictCrimeInNextYear.predictTotalCrimes();
        // String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
         button = new Button("Predict Total Number of Crimes in 2020");
-
-        Button buttonForDistrict = new Button ("To find the crime percentage in a district and year");
+        Button buttonForDistrict = new Button ("Find the crime % in a district and year");
 
         StackPane layout = new StackPane();
         layout.getChildren().addAll(button,buttonForDistrict);
-        setAlignment(buttonForDistrict,Pos.BOTTOM_CENTER);
         setAlignment(button,Pos.TOP_CENTER);
+        setAlignment(buttonForDistrict,Pos.CENTER);
+        buttonForDistrict.setMaxSize(270, 20);
+        buttonForDistrict.setStyle("-fx-border-color: #00ccff; -fx-border-width: 2px;");
+
 
 
         button.setOnAction(e->PredictionChart.display());
@@ -38,7 +40,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(layout,300,250);
         primaryStage.setScene(scene);
-       primaryStage.show();
+        primaryStage.show();
 
         //Another input
 //        FileReader fr= new FileReader("Crimes2018.csv");

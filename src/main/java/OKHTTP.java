@@ -21,6 +21,14 @@ public class OKHTTP
         Reader reader = new InputStreamReader(initialStream);
         JsonReader jsonReader = new JsonReader(reader);
         jsonReader.beginArray();
+        count = getCount(count, jsonReader);
+        jsonReader.endArray();
+        System.out.println(count);
+       // System.out.println( response.body().string());
+
+    }
+
+    private static int getCount(int count, JsonReader jsonReader) throws IOException {
         while (jsonReader.hasNext()) {
             String name = null;
             jsonReader.beginObject();
@@ -36,9 +44,6 @@ public class OKHTTP
             }
             jsonReader.endObject();
         }
-            jsonReader.endArray();
-        System.out.println(count);
-       // System.out.println( response.body().string());
-
+        return count;
     }
 }

@@ -1,12 +1,10 @@
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -26,8 +24,8 @@ public class InputHBox extends HBox {
 
     public InputHBox() {
         setSpacing(10);
-        setAlignment(Pos.BOTTOM_CENTER);
-        setPadding(new Insets(10, 0, 0, 10));
+        setAlignment(Pos.CENTER);
+        setPadding(new Insets(10, 10, 10, 10));
         createAndAddChildren();
     }
 
@@ -68,7 +66,6 @@ public class InputHBox extends HBox {
             System.out.println("inside handle method");
             CharSequence districtNum = districtText.getCharacters();
             CharSequence yearNum = yearText.getCharacters();
-
             double percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
 
 
