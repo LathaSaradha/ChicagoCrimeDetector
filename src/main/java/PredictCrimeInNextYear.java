@@ -46,7 +46,7 @@ public class PredictCrimeInNextYear
         totalCrimesInEachYear = totalCrimes;
     }
 
-    public TreeMap<Integer,Integer> getTotalCrimesInYears()
+    public static TreeMap<Integer,Integer> getTotalCrimesInYears()
     {
         return totalCrimesInEachYear;
     }

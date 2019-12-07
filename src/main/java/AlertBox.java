@@ -1,3 +1,6 @@
+
+//Ignore this class ->Can be used for other modules
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
