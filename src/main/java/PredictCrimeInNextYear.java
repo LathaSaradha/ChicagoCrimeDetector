@@ -78,27 +78,42 @@ public class PredictCrimeInNextYear
     public static double numberofCrimesInaDistrict(CharSequence districtNum, CharSequence yearNum) {
 
         int totalCount=0,districtCount=0;
-        System.out.println("inside numberofCrimesInaDistrict method");
+        //System.out.println("inside numberofCrimesInaDistrict method");
         System.out.println(districtNum +"  "+yearNum);
         String year= yearNum+"";
         String district= districtNum+"";
         String query = "$select=count(*) as total_count where year="+year;
 
-        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year);
-        SendHttpRequest httpRequest = new SendHttpRequest(query);
-        Reader reader = httpRequest.sendHttpRequest();
-        totalCount = JsonParser.crimeCounter(reader,"total_count");
-
-        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year+" in district "+district);
-         query = "$select=count(*) as total_count_district where year="+year+" and District=\""+district+"\"";
-        httpRequest = new SendHttpRequest(query);
-         reader = httpRequest.sendHttpRequest();
-
-        districtCount = JsonParser.crimeCounter(reader,"total_count_district");
+        totalCount = getTotalCount(year, query);
+        districtCount = getDistrictCount(year, district);
         System.out.println(districtCount);
         System.out.println(totalCount);
         return ((double)districtCount/totalCount) *100;
 
+    }
+
+    public static int getDistrictCount(String year, String district) {
+        String query;
+        int districtCount;
+        SendHttpRequest httpRequest;
+        Reader reader;
+
+        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year+" in district "+district);
+        query = "$select=count(*) as total_count_district where year="+year+" and District=\""+district+"\"";
+        httpRequest = new SendHttpRequest(query);
+        reader = httpRequest.sendHttpRequest();
+
+        districtCount = JsonParser.crimeCounter(reader,"total_count_district");
+        return districtCount;
+    }
+
+    public static int getTotalCount(String year, String query) {
+        int totalCount;
+        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year);
+        SendHttpRequest httpRequest = new SendHttpRequest(query);
+        Reader reader = httpRequest.sendHttpRequest();
+        totalCount = JsonParser.crimeCounter(reader,"total_count");
+        return totalCount;
     }
 
 //    public static void main(String[] args) {
