@@ -16,13 +16,13 @@ public class Main extends Application {
 
         primaryStage.setTitle("Crime Detector");
         //Predict Crimes Using Linear Regression
-        int predictedCrimes = PredictCrimeInNextYear.predictTotalCrimes();
-        String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
+       // int predictedCrimes = PredictCrimeInNextYear.predictTotalCrimes();
+       // String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
         button = new Button("Predict Total Number of Crimes in 2020");
 
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
-        button.setOnAction(e->AlertBox.display("Predicted Crimes Using Linear Regression",message));
+        button.setOnAction(e->PredictionChart.display());
 
 
 
