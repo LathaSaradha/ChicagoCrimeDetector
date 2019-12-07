@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
 import java.util.Map;
 
 public class PredictionChart
@@ -21,19 +22,31 @@ public class PredictionChart
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("YEAR");
 
+
+
+
+
+
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Number of Crimes");
 
-        BarChart barChart = new BarChart(xAxis,yAxis);
 
-        XYChart.Series dataSeries = new XYChart.Series();
+
+
+
+      //  BarChart barChart = new BarChart(xAxis,yAxis);
+        BarChart<String,Number> barChart = new BarChart<>(xAxis, yAxis);
+        XYChart.Series<String,Number>  dataSeries = new XYChart.Series<>();
         dataSeries.setName("Total Crimes in Year");
-        int predictedIn2020 = PredictCrimeInNextYear.predictTotalCrimes();
-        for(Map.Entry<Integer,Integer> pair : PredictCrimeInNextYear.getTotalCrimesInYears().entrySet())
+
+        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
+
+        int predictedIn2020 = predictCrimeInNextYear.predictTotalCrimes();
+        for(Map.Entry<Integer,Integer> pair : predictCrimeInNextYear.getTotalCrimesInYears().entrySet())
         {
-            dataSeries.getData().add(new XYChart.Data(pair.getKey().toString(),pair.getValue()));
+            dataSeries.getData().add(new XYChart.Data<>(pair.getKey().toString(),pair.getValue()));
         }
-        dataSeries.getData().add(new XYChart.Data("2020 (Predicted)",predictedIn2020));
+        dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)",predictedIn2020));
         barChart.getData().add(dataSeries);
 
         VBox vBox = new VBox(barChart);
