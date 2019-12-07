@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import static javafx.scene.layout.StackPane.*;
+
 
 public class Main extends Application {
     Button button;
@@ -25,8 +27,8 @@ public class Main extends Application {
 
         StackPane layout = new StackPane();
         layout.getChildren().addAll(button,buttonForDistrict);
-        layout.setAlignment(buttonForDistrict,Pos.BOTTOM_CENTER);
-        layout.setAlignment(button,Pos.TOP_CENTER);
+        setAlignment(buttonForDistrict,Pos.BOTTOM_CENTER);
+        setAlignment(button,Pos.TOP_CENTER);
 
 
         button.setOnAction(e->PredictionChart.display());

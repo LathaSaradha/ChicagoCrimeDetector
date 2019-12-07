@@ -63,40 +63,29 @@ public class InputHBox extends HBox {
 
     public void addMoveButtonAction() {
 
-        btnMove.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
+        btnMove.setOnAction(event -> {
 
-                                    System.out.println("inside handle method");
-                                    CharSequence districtNum = districtText.getCharacters();
-                                    CharSequence yearNum = yearText.getCharacters();
+            System.out.println("inside handle method");
+            CharSequence districtNum = districtText.getCharacters();
+            CharSequence yearNum = yearText.getCharacters();
 
-                                    double percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
+            double percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
 
 
-                                    Stage dialogStage = new Stage();
-                                    dialogStage.initModality(Modality.WINDOW_MODAL);
-                                    Button okButton = new Button("OK");
-                                    okButton.setOnAction(new EventHandler<ActionEvent>() {
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Button okButton = new Button("OK");
+            okButton.setOnAction(arg0 -> dialogStage.close());
+            String display = "Percentage of crimes in district " + districtNum + " in year " + yearNum + " is " + new DecimalFormat("#.##").format(percent) + " %";
+            VBox vbox = new VBox(new Text(display), okButton);
+            vbox.setAlignment(Pos.CENTER);
+            vbox.setPadding(new Insets(15));
 
-                                        @Override
-                                        public void handle(ActionEvent arg0) {
-                                            dialogStage.close();
-                                        }
-
-                                    });
-                                    String display = "Percentage of crimes in district " + districtNum + " in year " + yearNum + " is " + new DecimalFormat("#.##").format(percent) + " %";
-                                    VBox vbox = new VBox(new Text(display), okButton);
-                                    vbox.setAlignment(Pos.CENTER);
-                                    vbox.setPadding(new Insets(15));
-
-                                    dialogStage.setScene(new Scene(vbox));
-                                    dialogStage.show();
-                                    districtText.clear();
-                                    yearText.clear();
-                                }
-
-                            }
+            dialogStage.setScene(new Scene(vbox));
+            dialogStage.show();
+            districtText.clear();
+            yearText.clear();
+        }
 
         );
 

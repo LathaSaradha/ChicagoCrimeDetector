@@ -34,7 +34,7 @@ public class PredictCrimeInNextYear
 
     public static void totalCrimesInYear(int minYear, int maxYear)
     {
-        int count = 0;
+        int count;
         TreeMap<Integer,Integer> totalCrimes= new TreeMap<>();
         for(int i =minYear;i<=maxYear;i++) {
             String totalCrimesQuery = "$select=count(id) as total_crime where year="+i;
@@ -71,8 +71,7 @@ public class PredictCrimeInNextYear
     public static int predictTotalCrimes()
     {
         LinearRegression linearRegression = generateArraysForRegression();
-        int predictedCrimes = (int) linearRegression.predict(2020);
-        return predictedCrimes;
+        return (int) linearRegression.predict(2020);
 
     }
 
@@ -98,8 +97,7 @@ public class PredictCrimeInNextYear
         districtCount = JsonParser.crimeCounter(reader,"total_count_district");
         System.out.println(districtCount);
         System.out.println(totalCount);
-        double percentage=((double)districtCount/totalCount) *100;
-        return percentage;
+        return ((double)districtCount/totalCount) *100;
 
     }
 
