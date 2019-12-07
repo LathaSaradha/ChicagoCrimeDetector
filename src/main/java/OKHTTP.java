@@ -12,10 +12,10 @@ public class OKHTTP
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=id,date")
+                .url("https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=count(id) as total_Crimes where year=2008")
                 .get()
                 .build();
-
+        int count = 0;
         Response response = client.newCall(request).execute();
         InputStream initialStream = new ByteArrayInputStream(response.body().string().getBytes());
         Reader reader = new InputStreamReader(initialStream);
@@ -26,7 +26,8 @@ public class OKHTTP
             jsonReader.beginObject();
             while (jsonReader.hasNext()) {
                 name = jsonReader.nextName();
-                if (name.equals("id")) {
+                if (name.equals("total_Crimes")) {
+                    count++;
                     System.out.println(name);
                     System.out.println(jsonReader.nextString());
                 } else {
@@ -36,7 +37,7 @@ public class OKHTTP
             jsonReader.endObject();
         }
             jsonReader.endArray();
-
+        System.out.println(count);
        // System.out.println( response.body().string());
 
     }
