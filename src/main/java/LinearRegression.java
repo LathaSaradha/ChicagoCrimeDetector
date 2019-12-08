@@ -1,72 +1,117 @@
 public class LinearRegression {
     private final double intercept, slope;
-    private final double r2;
-    private final double svar0, svar1;
 
-    public LinearRegression(double[] x, double[] y) {
-        if (x.length != y.length) {
+    public LinearRegression(double[] prediction, double[] response) {
+        if (prediction.length != response.length) {
             throw new IllegalArgumentException("array lengths are not equal");
         }
-        int n = x.length;
-
+        int total = prediction.length;
         // first pass
-        double sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
-        for (int i = 0; i < n; i++) {
-            sumx  += x[i];
-            sumx2 += x[i]*x[i];
-            sumy  += y[i];
-        }
-        double xbar = sumx / n;
-        double ybar = sumy / n;
+        double sumPredict = 0.0, sumResponse = 0.0, sum = 0.0;
+        FirstPass firstPass = new FirstPass(prediction, response, total, sumPredict, sumResponse, sum).invoke();
+        double predictRate = firstPass.getPredictRate();
+        double responseRate = firstPass.getResponseRate();
 
         // second pass: compute summary statistics
-        double xxbar = 0.0, yybar = 0.0, xybar = 0.0;
-        for (int i = 0; i < n; i++) {
-            xxbar += (x[i] - xbar) * (x[i] - xbar);
-            yybar += (y[i] - ybar) * (y[i] - ybar);
-            xybar += (x[i] - xbar) * (y[i] - ybar);
-        }
-        slope  = xybar / xxbar;
-        intercept = ybar - slope * xbar;
+        SummaryStatistics summaryStatistics = new SummaryStatistics(prediction, response, total, predictRate, responseRate).invoke();
+        double predictSummary = summaryStatistics.getPredictSummary();
+        double summary = summaryStatistics.getSummary();
+        slope  = summary / predictSummary;
+        intercept = responseRate - slope * predictRate;
 
         // more statistical analysis
-        double rss = 0.0;      // residual sum of squares
-        double ssr = 0.0;      // regression sum of squares
-        for (int i = 0; i < n; i++) {
-            double fit = slope*x[i] + intercept;
-            rss += (fit - y[i]) * (fit - y[i]);
-            ssr += (fit - ybar) * (fit - ybar);
+        new StatisticalAnalysis(prediction, response, total, responseRate).invoke();
+
+    }
+
+    public double predict(double x)
+    {
+        return slope * x + intercept;
+    }
+
+    private class FirstPass {
+        private double[] prediction;
+        private double[] response;
+        private int total;
+        private double sumPredict;
+        private double sumResponse;
+        private double predictRate;
+        private double responseRate;
+
+        public FirstPass(double[] prediction, double[] response, int total, double sumPredict, double sumResponse, double sum) {
+            this.prediction = prediction;
+            this.response = response;
+            this.total = total;
+            this.sumPredict = sumPredict;
+            this.sumResponse = sumResponse;
         }
 
-        int degreesOfFreedom = n-2;
-        r2    = ssr / yybar;
-        double svar  = rss / degreesOfFreedom;
-        svar1 = svar / xxbar;
-        svar0 = svar/n + xbar*xbar*svar1;
+        public double getPredictRate() {
+            return predictRate;
+        }
+
+        public double getResponseRate() {
+            return responseRate;
+        }
+
+        public FirstPass invoke() {
+            for (int i = 0; i < total; i++) {
+                sumPredict  += prediction[i];
+                sumResponse  += response[i];
+            }
+            predictRate = sumPredict / total;
+            responseRate = sumResponse / total;
+            return this;
+        }
     }
 
-    public double intercept() {
-        return intercept;
+    private class SummaryStatistics {
+        private double[] prediction;
+        private double[] response;
+        private int total;
+        private double predictRate;
+        private double responseRate;
+        private double predictSummary;
+        private double summary;
+
+        public SummaryStatistics(double[] prediction, double[] response, int total, double predictRate, double responseRate) {
+            this.prediction = prediction;
+            this.response = response;
+            this.total = total;
+            this.predictRate = predictRate;
+            this.responseRate = responseRate;
+        }
+
+        public double getPredictSummary() {
+            return predictSummary;
+        }
+
+        public double getSummary() {
+            return summary;
+        }
+
+        public SummaryStatistics invoke() {
+            predictSummary = 0.0;
+            summary = 0.0;
+            for (int i = 0; i < total; i++) {
+                predictSummary += (prediction[i] - predictRate) * (prediction[i] - predictRate);
+                summary += (prediction[i] - predictRate) * (response[i] - responseRate);
+            }
+            return this;
+        }
     }
 
-    public double slope() {
-        return slope;
-    }
+    private class StatisticalAnalysis {
+        private int total;
 
-    public double R2() {
-        return r2;
-    }
+        public StatisticalAnalysis(double[] prediction, double[] response, int total, double responseRate) {
+            this.total = total;
+        }
 
-    public double interceptStdErr() {
-        return Math.sqrt(svar0);
+        public StatisticalAnalysis invoke() {
+            for (int i = 0; i < total; i++) {
+            }
+            return this;
+        }
     }
-
-    public double slopeStdErr() {
-        return Math.sqrt(svar1);
-    }
-
-    public double predict(double x) {
-        return slope*x + intercept;
-    }
-
 }

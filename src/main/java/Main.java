@@ -25,7 +25,7 @@ public class Main extends Application {
        // String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
         predictCrimesButton = new Button("Predict Total Number of Crimes in 2020");
         topFiveArrestsButton = new Button("View Arrests For Top Five Crimes Types");
-        buttonForDistrict = new Button ("To find the crime percentage in a district and year");
+        buttonForDistrict = new Button ("Find crime percentage in a district and year");
 
         StackPane layout = new StackPane();
         VBox vBox = new VBox(5);
