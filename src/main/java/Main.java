@@ -3,13 +3,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import static javafx.scene.layout.StackPane.*;
 
 
 public class Main extends Application {
-    Button button;
+    Button predictCrimesButton;
+    Button topFiveArrestsButton;
+    Button buttonForDistrict;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,35 +23,27 @@ public class Main extends Application {
         //Predict Crimes Using Linear Regression
        // int predictedCrimes = PredictCrimeInNextYear.predictTotalCrimes();
        // String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
-        button = new Button("Predict Total Number of Crimes in 2020");
-
-        Button buttonForDistrict = new Button ("To find the crime percentage in a district and year");
+        predictCrimesButton = new Button("Predict Total Number of Crimes in 2020");
+        topFiveArrestsButton = new Button("View Arrests For Top Five Crimes Types");
+        buttonForDistrict = new Button ("To find the crime percentage in a district and year");
 
         StackPane layout = new StackPane();
-        layout.getChildren().addAll(button,buttonForDistrict);
-        setAlignment(buttonForDistrict,Pos.BOTTOM_CENTER);
-        setAlignment(button,Pos.TOP_CENTER);
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(predictCrimesButton,topFiveArrestsButton,buttonForDistrict);
+        layout.getChildren().add(vBox);
+        layout.setAlignment(Pos.CENTER);
 
 
-        button.setOnAction(e->PredictionChart.display());
+
+
+        predictCrimesButton.setOnAction(e->PredictionChart.display());
+        topFiveArrestsButton.setOnAction(e->ArrestsPieChart.display());
 
 
         buttonForDistrict.setOnAction(e->PredictionChart.districtPercentage());
 
-        Scene scene = new Scene(layout,300,250);
+        Scene scene = new Scene(layout,300,100);
         primaryStage.setScene(scene);
-       primaryStage.show();
-
-        //Another input
-//        FileReader fr= new FileReader("Crimes2018.csv");
-//        // fr.readFile();
-//
-//        InputHBox hb= new InputHBox();
-//        layout.getChildren().add(hb);
-//        hb.addMoveButtonAction(fr);
-//        //Input completed
-
-
-
+        primaryStage.show();
     }
 }

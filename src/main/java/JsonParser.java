@@ -2,22 +2,23 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 
 public class JsonParser
 {
     public static int crimeCounter(Reader reader,String requestedFieldName)
     {
+        String fieldName;
         int counter=0;
         try (JsonReader jsonReader = new JsonReader(reader)) {
             jsonReader.beginArray();
             while (jsonReader.hasNext()) {
-                String fieldName;
                 jsonReader.beginObject();
                 while (jsonReader.hasNext()) {
                     fieldName = jsonReader.nextName();
                     if (fieldName.equals(requestedFieldName)) {
                         counter = Integer.parseInt(jsonReader.nextString());
-                        System.out.println("Receiving Data");
+                        System.out.println(counter);
                     } else {
                         jsonReader.skipValue();
                     }
@@ -32,36 +33,32 @@ public class JsonParser
     }
 
 
+   public static ArrayList<String> getCrimeTypes(Reader reader,String requestedFieldName)
+   {
+       String fieldName;
+       ArrayList<String> crimeTypes = new ArrayList<>();
+       try (JsonReader jsonReader = new JsonReader(reader)) {
+           jsonReader.beginArray();
+           while (jsonReader.hasNext()) {
+               jsonReader.beginObject();
+               while (jsonReader.hasNext()) {
+                   fieldName = jsonReader.nextName();
+                   if (fieldName.equals(requestedFieldName)) {
+                       System.out.println(crimeTypes.add(jsonReader.nextString()));
+                       System.out.println("Receiving Data");
 
-
-    public static int crimeCounterTotal(Reader reader,String requestedFieldName)
-    {
-        int counter=0;
-        try (JsonReader jsonReader = new JsonReader(reader)) {
-            jsonReader.beginArray();
-            while (jsonReader.hasNext()) {
-                String fieldName;
-                jsonReader.beginObject();
-                while (jsonReader.hasNext()) {
-                    fieldName = jsonReader.nextName();
-                    if (fieldName.equals(requestedFieldName)) {
-                        counter++;
-                       // counter = Integer.parseInt(jsonReader.nextString());
-                        System.out.println(jsonReader.nextString());
-                    } else {
-                        jsonReader.skipValue();
-                    }
-                }
-                jsonReader.endObject();
-            }
-            jsonReader.endArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return counter;
-    }
-
-
+                   } else {
+                       jsonReader.skipValue();
+                   }
+               }
+               jsonReader.endObject();
+           }
+           jsonReader.endArray();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+    return crimeTypes;
+   }
 
 
 }

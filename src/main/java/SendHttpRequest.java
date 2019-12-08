@@ -6,21 +6,21 @@ import java.io.*;
 
 public class SendHttpRequest
 {
-    private static final String URL = "https://data.cityofchicago.org/resource/ijzp-q8t2.json?";
+    private  String URL = "https://data.cityofchicago.org/resource/ijzp-q8t2.json?";
     private  String query;
 
-    public SendHttpRequest(String query) {
-        this.query = URL+query;
-    }
+    public SendHttpRequest(String query) { this.URL = URL+query; }
+
 
     public  Reader sendHttpRequest()
     {
         System.out.println("Sending HTTP request");
+        System.out.println(URL);
         Reader reader = null;
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
             Request.Builder builder = new Request.Builder();
-            builder.url(query);
+            builder.url(URL);
             builder.get();
             Request request = builder.build();
             Response response = okHttpClient.newCall(request).execute();

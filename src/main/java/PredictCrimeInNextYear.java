@@ -15,7 +15,7 @@ public class PredictCrimeInNextYear
 
     public static int getMinYear()
     {
-        int minYear = 0;
+        int minYear;
         String getMinYearQuery = "$select=min(year) as min_year";
         SendHttpRequest httpRequest = new SendHttpRequest(getMinYearQuery);
         Reader reader = httpRequest.sendHttpRequest();
@@ -24,7 +24,7 @@ public class PredictCrimeInNextYear
     }
     public static int getMaxYear()
     {
-        int maxYear = 0;
+        int maxYear;
         String getMinYearQuery = "$select=max(year) as max_year";
         SendHttpRequest httpRequest = new SendHttpRequest(getMinYearQuery);
         Reader reader = httpRequest.sendHttpRequest();
@@ -54,18 +54,16 @@ public class PredictCrimeInNextYear
 
     public static LinearRegression generateArraysForRegression()
     {
-        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
-        double[] x = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
-        double[] y = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
+        double[] x = new double[getTotalCrimesInYears().size()];
+        double[] y = new double[getTotalCrimesInYears().size()];
         int i=0;
-        for(Map.Entry<Integer,Integer> pair : predictCrimeInNextYear.getTotalCrimesInYears().entrySet())
+        for(Map.Entry<Integer,Integer> pair : getTotalCrimesInYears().entrySet())
         {
             x[i] = pair.getKey();
             y[i] = pair.getValue();
             i++;
         }
-        LinearRegression linearRegression = new LinearRegression(x,y);
-        return linearRegression;
+        return new LinearRegression(x,y);
     }
 
     public static int predictTotalCrimes()
@@ -77,7 +75,7 @@ public class PredictCrimeInNextYear
 
     public static double numberofCrimesInaDistrict(CharSequence districtNum, CharSequence yearNum) {
 
-        int totalCount=0,districtCount=0;
+        int totalCount,districtCount;
         //System.out.println("inside numberofCrimesInaDistrict method");
         System.out.println(districtNum +"  "+yearNum);
         String year= yearNum+"";
@@ -116,24 +114,24 @@ public class PredictCrimeInNextYear
         return totalCount;
     }
 
-//    public static void main(String[] args) {
-//        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
-//        System.out.println(predictCrimeInNextYear.getTotalCrimesInYears());
-//        double[] x = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
-//        double[] y = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
-//        int i=0;
-//       for(Map.Entry<Integer,Integer> pair : predictCrimeInNextYear.getTotalCrimesInYears().entrySet())
-//       {
-//           x[i] = pair.getKey();
-//           y[i] = pair.getValue();
-//           i++;
-//       }
-//       for(int j=0;j<x.length;j++)
-//       {
-//           System.out.println("x: "+x[j]+","+"y: "+y[j]);
-//       }
-//       LinearRegression linearRegression = new LinearRegression(x,y);
-//        System.out.println((int)linearRegression.predict(2020));
-//    }
+    public static void main(String[] args) {
+        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
+        System.out.println(predictCrimeInNextYear.getTotalCrimesInYears());
+        double[] x = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
+        double[] y = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
+        int i=0;
+       for(Map.Entry<Integer,Integer> pair : predictCrimeInNextYear.getTotalCrimesInYears().entrySet())
+       {
+           x[i] = pair.getKey();
+           y[i] = pair.getValue();
+           i++;
+       }
+       for(int j=0;j<x.length;j++)
+       {
+           System.out.println("x: "+x[j]+","+"y: "+y[j]);
+       }
+       LinearRegression linearRegression = new LinearRegression(x,y);
+        System.out.println((int)linearRegression.predict(2020));
+    }
 
 }
