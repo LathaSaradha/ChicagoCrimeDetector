@@ -20,7 +20,7 @@ public class LinearRegression {
         intercept = responseRate - slope * predictRate;
 
         // more statistical analysis
-        new StatisticalAnalysis(prediction, response, total, responseRate).invoke();
+        new StatisticalAnalysis(total).invoke();
 
     }
 
@@ -104,7 +104,7 @@ public class LinearRegression {
     private class StatisticalAnalysis {
         private int total;
 
-        public StatisticalAnalysis(double[] prediction, double[] response, int total, double responseRate) {
+        public StatisticalAnalysis(int total) {
             this.total = total;
         }
 
