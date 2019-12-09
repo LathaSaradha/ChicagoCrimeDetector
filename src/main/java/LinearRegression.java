@@ -1,3 +1,5 @@
+import java.util.stream.IntStream;
+
 public class LinearRegression {
     private final double intercept, slope;
 
@@ -20,7 +22,7 @@ public class LinearRegression {
         intercept = responseRate - slope * predictRate;
 
         // more statistical analysis
-        new StatisticalAnalysis(total).invoke();
+        new StatisticalAnalysis().invoke();
 
     }
 
@@ -55,17 +57,17 @@ public class LinearRegression {
         }
 
         public FirstPass invoke() {
-            for (int i = 0; i < total; i++) {
-                sumPredict  += prediction[i];
-                sumResponse  += response[i];
-            }
+            IntStream.range(0, total).forEach(i -> {
+                sumPredict += prediction[i];
+                sumResponse += response[i];
+            });
             predictRate = sumPredict / total;
             responseRate = sumResponse / total;
             return this;
         }
     }
 
-    private class SummaryStatistics {
+    private static class SummaryStatistics {
         private double[] prediction;
         private double[] response;
         private int total;
@@ -93,25 +95,21 @@ public class LinearRegression {
         public SummaryStatistics invoke() {
             predictSummary = 0.0;
             summary = 0.0;
-            for (int i = 0; i < total; i++) {
+            IntStream.range(0, total).forEach(i -> {
                 predictSummary += (prediction[i] - predictRate) * (prediction[i] - predictRate);
                 summary += (prediction[i] - predictRate) * (response[i] - responseRate);
-            }
+            });
             return this;
         }
     }
 
-    private class StatisticalAnalysis {
-        private int total;
+    private static class StatisticalAnalysis {
 
-        public StatisticalAnalysis(int total) {
-            this.total = total;
+        public StatisticalAnalysis() {
         }
 
-        public StatisticalAnalysis invoke() {
-            for (int i = 0; i < total; i++) {
-            }
-            return this;
+        public void invoke() {
+
         }
     }
 }

@@ -8,10 +8,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.Map;
-
-public class PredictionChart
+public enum PredictionChart
 {
+    ;
+
     public static void display()
     {
         Stage window = new Stage();
@@ -34,10 +34,8 @@ public class PredictionChart
 
         //Removing the checked exception for raw types.
 
-        for(Map.Entry<Integer,Integer> pair : PredictCrimeInNextYear.getTotalCrimesInYears().entrySet())
-        {
-            dataSeries.getData().add(new XYChart.Data<>(pair.getKey().toString(),pair.getValue()));
-        }
+        PredictCrimeInNextYear.getTotalCrimesInYears().
+                forEach((key, value) -> dataSeries.getData().add(new XYChart.Data<>(key.toString(), value)));
 
 
         dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)",predictedIn2020));

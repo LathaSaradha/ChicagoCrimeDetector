@@ -6,8 +6,10 @@ import okhttp3.Response;
 import java.io.*;
 
 
-public class OKHTTP
+public enum OKHTTP
 {
+    ;
+
     public static void main(String[] args) throws IOException {
         OkHttpClient client = new OkHttpClient();
 

@@ -1,6 +1,7 @@
 import java.io.Reader;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.IntStream;
 
 public class PredictCrimeInNextYear
 {
@@ -116,20 +117,17 @@ public class PredictCrimeInNextYear
 
     public static void main(String[] args) {
         PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
-        System.out.println(predictCrimeInNextYear.getTotalCrimesInYears());
-        double[] x = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
-        double[] y = new double[predictCrimeInNextYear.getTotalCrimesInYears().size()];
+        System.out.println(getTotalCrimesInYears());
+        double[] x = new double[getTotalCrimesInYears().size()];
+        double[] y = new double[getTotalCrimesInYears().size()];
         int i=0;
-       for(Map.Entry<Integer,Integer> pair : predictCrimeInNextYear.getTotalCrimesInYears().entrySet())
+       for(Map.Entry<Integer,Integer> pair : getTotalCrimesInYears().entrySet())
        {
            x[i] = pair.getKey();
            y[i] = pair.getValue();
            i++;
        }
-       for(int j=0;j<x.length;j++)
-       {
-           System.out.println("x: "+x[j]+","+"y: "+y[j]);
-       }
+        IntStream.range(0, x.length).mapToObj(j -> "x: " + x[j] + "," + "y: " + y[j]).forEach(System.out::println);
        LinearRegression linearRegression = new LinearRegression(x,y);
         System.out.println((int)linearRegression.predict(2020));
     }
