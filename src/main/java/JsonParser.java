@@ -36,7 +36,7 @@ public enum JsonParser
     }
 
 
-   public static Iterable<String> getCrimeTypes(Reader reader, String requestedFieldName)
+   public static List<String> getCrimeTypes(Reader reader, String requestedFieldName)
    {
        String fieldName;
        List<String> crimeTypes = new ArrayList<>();
@@ -48,7 +48,7 @@ public enum JsonParser
                    fieldName = jsonReader.nextName();
                    if (fieldName.equals(requestedFieldName)) {
                        System.out.println(crimeTypes.add(jsonReader.nextString()));
-                       System.out.println("Receiving Data");
+                       //System.out.println("Receiving Data");
 
                    } else {
                        jsonReader.skipValue();

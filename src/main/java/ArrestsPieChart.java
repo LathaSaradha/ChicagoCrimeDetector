@@ -14,6 +14,7 @@ public enum ArrestsPieChart {
     ;
 
     public static void display() {
+        long start=System.currentTimeMillis();
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -23,14 +24,14 @@ public enum ArrestsPieChart {
         Arrests arrests = new Arrests();
         int totalArrestsInTopFive =  arrests.getArrests()
                 .entrySet()
-                .stream()
+                .parallelStream()
                 .limit(5)
                 .mapToInt(Map.Entry::getValue)
                 .sum();
 
         arrests.getArrests()
                 .entrySet()
-                .stream()
+                .parallelStream()
                 .limit(5)
                 .forEach((e) -> {
                     System.out.println(e);
@@ -49,6 +50,10 @@ public enum ArrestsPieChart {
         window.setTitle("Arrests In Top Five Crime Types");
         window.setHeight(400);
         window.setWidth(800);
+
+        long stop=System.currentTimeMillis();
+        System.out.println("time to calculate Arrests "+(stop-start)+" milliseconds");
+
         window.showAndWait();
 
     }

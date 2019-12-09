@@ -25,13 +25,13 @@ public class Arrests
         return sendHttpRequest.sendHttpRequest();
     }
 
-    public Iterable<String> getCrimeTypes()
+    public List<String> getCrimeTypes()
     {
         String query;
         query = "$select=distinct(primary_type) as crime_types";
         Reader reader = this.sendQuery(query);
         String requestedFieldName;
-        final Iterable<String> crimeTypes;
+        final List<String> crimeTypes;
         requestedFieldName = "crime_types";
         crimeTypes = JsonParser.getCrimeTypes(reader, requestedFieldName);
         System.out.println(crimeTypes);
@@ -42,7 +42,11 @@ public class Arrests
     {
         String queryFirstPart = "$select=count(id) as arrests where primary_type=\"";
         String queryLastPart = "\" and arrest=true";
-        getCrimeTypes().forEach((e)->{
+
+
+
+        getCrimeTypes().parallelStream()
+                .forEach((e)->{
             System.out.println("in lambda");
             Reader reader = sendQuery(queryFirstPart+e+queryLastPart);
             generateArrestCountsHelper(reader,e);
