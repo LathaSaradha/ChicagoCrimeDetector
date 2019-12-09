@@ -3,11 +3,11 @@ import java.util.*;
 
 public class Arrests
 {
-    public LinkedHashMap<String, Integer> getArrests() {
+    public Map<String, Integer> getArrests() {
         return arrests;
     }
 
-    public LinkedHashMap<String,Integer> arrests;
+    public Map<String,Integer> arrests;
 
     public Arrests()
     {
@@ -25,13 +25,13 @@ public class Arrests
         return sendHttpRequest.sendHttpRequest();
     }
 
-    public ArrayList<String> getCrimeTypes()
+    public Iterable<String> getCrimeTypes()
     {
         String query;
         query = "$select=distinct(primary_type) as crime_types";
         Reader reader = this.sendQuery(query);
         String requestedFieldName;
-        final ArrayList<String> crimeTypes;
+        final Iterable<String> crimeTypes;
         requestedFieldName = "crime_types";
         crimeTypes = JsonParser.getCrimeTypes(reader, requestedFieldName);
         System.out.println(crimeTypes);

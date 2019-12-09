@@ -27,6 +27,7 @@ public class LinearRegression {
 
     public double predict(double x)
     {
+
         return slope * x + intercept;
     }
 

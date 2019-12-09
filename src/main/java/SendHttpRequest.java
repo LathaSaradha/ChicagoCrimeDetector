@@ -7,10 +7,10 @@ import java.io.*;
 public class SendHttpRequest
 {
     private  String URL = "https://data.cityofchicago.org/resource/ijzp-q8t2.json?";
-    private  String query;
 
-    public SendHttpRequest(String query) { this.URL = URL+query; }
-
+    public SendHttpRequest(String query) {
+        this.URL = URL+query;
+    }
 
     public  Reader sendHttpRequest()
     {

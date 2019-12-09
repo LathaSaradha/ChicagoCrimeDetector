@@ -29,7 +29,7 @@ public enum PredictionChart
         XYChart.Series<String,Number>  dataSeries = new XYChart.Series<>();
         dataSeries.setName("Total Crimes in Year");
 
-        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
+        new PredictCrimeInNextYear();
         int predictedIn2020 = PredictCrimeInNextYear.predictTotalCrimes();
 
         //Removing the checked exception for raw types.

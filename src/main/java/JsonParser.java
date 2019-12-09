@@ -3,9 +3,12 @@ import com.google.gson.stream.JsonReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
-public class JsonParser
+public enum JsonParser
 {
+    ;
+
     public static int crimeCounter(Reader reader,String requestedFieldName)
     {
         String fieldName;
@@ -33,10 +36,10 @@ public class JsonParser
     }
 
 
-   public static ArrayList<String> getCrimeTypes(Reader reader,String requestedFieldName)
+   public static Iterable<String> getCrimeTypes(Reader reader, String requestedFieldName)
    {
        String fieldName;
-       ArrayList<String> crimeTypes = new ArrayList<>();
+       List<String> crimeTypes = new ArrayList<>();
        try (JsonReader jsonReader = new JsonReader(reader)) {
            jsonReader.beginArray();
            while (jsonReader.hasNext()) {

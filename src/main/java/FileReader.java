@@ -21,7 +21,6 @@ public class FileReader {
     }
 
     public List<String[]> readFile() {
-        long count = 0;
         List<String[]> list = null;
 
         Path path = new File(FileReader.class.getResource(filename).getFile()).toPath();
@@ -40,22 +39,6 @@ public class FileReader {
         return list;
     }
 
-    public void numberofCrimesInaDistrict(String districtNum)
-    {
-
-        List<String[]> list = readFile();
-
-        List<String> ListDistrict = list.stream().map(s -> s[11])
-                .collect(toList());
-
-        long countOfCrimes = 0;
-
-        countOfCrimes = ListDistrict.stream()
-                .filter(s -> s.equals(districtNum))
-                .count();
-
-        System.out.println("Crime Count in " + districtNum + " is " + countOfCrimes);
-    }
     public void CrimeTypeInCommunityArea(String area)
     {
         List<String[]> list = readFile();

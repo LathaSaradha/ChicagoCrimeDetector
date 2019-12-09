@@ -7,15 +7,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class ArrestsPieChart {
+public enum ArrestsPieChart {
+    ;
+
     public static void display() {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Total Arrests for each Crime Type");
-        ArrayList<PieChart.Data> pieChartData = new ArrayList<>();
+        List<PieChart.Data> pieChartData = new ArrayList<>();
 
         Arrests arrests = new Arrests();
         int totalArrestsInTopFive =  arrests.getArrests()
