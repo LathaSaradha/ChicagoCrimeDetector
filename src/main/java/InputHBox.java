@@ -10,11 +10,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.text.DecimalFormat;
 
 public class InputHBox extends HBox {
     private Label districtLabel;
-    private Label YearLabel;
+    private Label yearLabel;
 
 
     private TextField districtText;
@@ -31,7 +32,7 @@ public class InputHBox extends HBox {
 
     private void createLabels() {
         this.districtLabel = new Label("District");
-        this.YearLabel = new Label("Year");
+        this.yearLabel = new Label("Year");
         this.districtText = new TextField("District Number");
         this.yearText = new TextField("Year");
     }
@@ -53,7 +54,7 @@ public class InputHBox extends HBox {
         createTextFields();
         createMoveButton();
 
-        getChildren().addAll(this.districtLabel, this.districtText, this.yearText, this.YearLabel,
+        getChildren().addAll(this.districtLabel, this.districtText, this.yearText, this.yearLabel,
                 this.btnMove);
 
         addMoveButtonAction();
@@ -62,15 +63,37 @@ public class InputHBox extends HBox {
     public void addMoveButtonAction() {
 
         btnMove.setOnAction(event -> {
+                    double percent=0.0;
+            //System.out.println("inside handle method");
 
-            System.out.println("inside handle method");
-            CharSequence districtNum = districtText.getCharacters();
-            CharSequence yearNum = yearText.getCharacters();
-            double percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
+            try{CharSequence districtNum = districtText.getCharacters();
+                CharSequence yearNum = yearText.getCharacters();
+                int district=Integer.parseInt(districtNum+"");
+                int year=Integer.parseInt(yearNum+"");
 
-
+                if(( district<=25) && year>=2001 && year<=2019 )
+                {
+                    percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
                     displayResultDialogueBox(districtNum, yearNum, percent);
-                    districtText.clear();
+                }
+
+                  else{
+                    JFrame f= new JFrame();
+                    JOptionPane.showMessageDialog(f, "Invalid Choice. \n" );
+                }
+
+            }
+
+
+
+                   catch(StringIndexOutOfBoundsException | IllegalArgumentException s)
+                    {
+                        JFrame f= new JFrame();
+                        JOptionPane.showMessageDialog(f, "Invalid Choice. \n" );
+                    }
+
+
+            districtText.clear();
             yearText.clear();
         }
 
@@ -81,8 +104,11 @@ public class InputHBox extends HBox {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);
         Button okButton = new Button("OK");
+
         okButton.setOnAction(arg0 -> dialogStage.close());
+
         String display = "Percentage of crimes in district " + districtNum + " in year " + yearNum + " is " + new DecimalFormat("#.##").format(percent) + " %";
+
         VBox vbox = new VBox(new Text(display), okButton);
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(15));
