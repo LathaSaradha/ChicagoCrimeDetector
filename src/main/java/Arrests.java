@@ -59,10 +59,8 @@ public class Arrests implements Wait {
             }
         } finally {
             //Usage of abstract method in Wait interface.
-
             wait(service, 4);
         }
-
 
 /*
         getCrimeTypes().parallelStream()
