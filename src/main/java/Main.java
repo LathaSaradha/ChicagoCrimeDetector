@@ -33,9 +33,6 @@ public class Main extends Application {
         layout.getChildren().add(vBox);
         layout.setAlignment(Pos.CENTER);
 
-
-
-
         predictCrimesButton.setOnAction(e->PredictionChart.display());
         topFiveArrestsButton.setOnAction(e->ArrestsPieChart.display());
 

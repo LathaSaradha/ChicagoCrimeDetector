@@ -6,7 +6,7 @@ import okhttp3.Response;
 import java.io.*;
 
 
-public enum OKHTTP
+public enum OkHttp
 {
     ;
 

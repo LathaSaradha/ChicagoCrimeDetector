@@ -22,7 +22,6 @@ public class LinearRegression {
         intercept = responseRate - slope * predictRate;
 
         // more statistical analysis
-        new StatisticalAnalysis().invoke();
 
     }
 
@@ -31,7 +30,7 @@ public class LinearRegression {
         return slope * x + intercept;
     }
 
-    private class FirstPass {
+    private static class FirstPass {
         private double[] prediction;
         private double[] response;
         private int total;
@@ -103,13 +102,5 @@ public class LinearRegression {
         }
     }
 
-    private static class StatisticalAnalysis {
 
-        public StatisticalAnalysis() {
-        }
-
-        public void invoke() {
-
-        }
-    }
 }
