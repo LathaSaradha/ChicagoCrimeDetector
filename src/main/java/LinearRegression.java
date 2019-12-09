@@ -10,7 +10,7 @@ public class LinearRegression {
         int total = prediction.length;
         // first pass
         double sumPredict = 0.0, sumResponse = 0.0, sum = 0.0;
-        FirstPass firstPass = new FirstPass(prediction, response, total, sumPredict, sumResponse, sum).invoke();
+        FirstPass firstPass = new FirstPass(prediction, response, total, sumPredict, sumResponse).invoke();
         double predictRate = firstPass.getPredictRate();
         double responseRate = firstPass.getResponseRate();
 
@@ -20,8 +20,6 @@ public class LinearRegression {
         double summary = summaryStatistics.getSummary();
         slope  = summary / predictSummary;
         intercept = responseRate - slope * predictRate;
-
-        // more statistical analysis
 
     }
 
@@ -40,7 +38,7 @@ public class LinearRegression {
         private double predictRate;
         private double responseRate;
 
-        public FirstPass(double[] prediction, double[] response, int total, double sumPredict, double sumResponse, double sum) {
+        public FirstPass(double[] prediction, double[] response, int total, double sumPredict, double sumResponse) {
             this.prediction = prediction;
             this.response = response;
             this.total = total;
@@ -48,14 +46,15 @@ public class LinearRegression {
             this.sumResponse = sumResponse;
         }
 
-        public double getPredictRate() {
+        public double getPredictRate()
+        {
             return predictRate;
         }
 
-        public double getResponseRate() {
+        public double getResponseRate()
+        {
             return responseRate;
         }
-
         public FirstPass invoke() {
             IntStream.range(0, total).forEach(i -> {
                 sumPredict += prediction[i];
@@ -84,11 +83,13 @@ public class LinearRegression {
             this.responseRate = responseRate;
         }
 
-        public double getPredictSummary() {
+        public double getPredictSummary()
+        {
             return predictSummary;
         }
 
-        public double getSummary() {
+        public double getSummary()
+        {
             return summary;
         }
 

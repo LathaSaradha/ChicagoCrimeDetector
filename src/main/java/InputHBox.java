@@ -77,7 +77,6 @@ public class InputHBox extends HBox {
         );
 
     }
-
     public void displayResultDialogueBox(CharSequence districtNum, CharSequence yearNum, double percent) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -56,13 +57,7 @@ public class FileReader {
                 .collect(toList());
         List<String> stringList = new ArrayList<>();
         int j = 1;
-        for(int i = 1; i < list.size(); i++)
-        {
-            if(listOfArea.get(i).equals(area))
-            {
-                stringList.add(primaryType.get(i) + " \n" + "Description for the crime: " + stringList.add(description.get(j) + " \n" + "Location of the crime " + location.get(j)));
-            }
-        }
+        IntStream.range(1, list.size()).filter(i -> listOfArea.get(i).equals(area)).forEach(i -> stringList.add(primaryType.get(i) + " \n" + "Description for the crime: " + stringList.add(description.get(j) + " \n" + "Location of the crime " + location.get(j))));
         System.out.println(stringList);
     }
     public void timeOfCrime()
@@ -77,9 +72,8 @@ public class FileReader {
         for (String str : listOfDates)
         {
             //d = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").parse(str);
-            String originalString = str;
             try{
-                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(originalString);
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(str);
                 hours = new SimpleDateFormat("H:mm:ss").format(date); // 9:00
                 System.out.println(hours);
             }
