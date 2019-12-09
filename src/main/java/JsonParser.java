@@ -21,7 +21,7 @@ public enum JsonParser
                     fieldName = jsonReader.nextName();
                     if (fieldName.equals(requestedFieldName)) {
                         counter = Integer.parseInt(jsonReader.nextString());
-                        System.out.println(counter);
+                        System.out.println(requestedFieldName+": "+counter);
                     } else {
                         jsonReader.skipValue();
                     }
@@ -47,7 +47,8 @@ public enum JsonParser
                while (jsonReader.hasNext()) {
                    fieldName = jsonReader.nextName();
                    if (fieldName.equals(requestedFieldName)) {
-                       System.out.println(crimeTypes.add(jsonReader.nextString()));
+                       crimeTypes.add(jsonReader.nextString());
+                       //System.out.println(crimeTypes.add(jsonReader.nextString()));
                        //System.out.println("Receiving Data");
 
                    } else {

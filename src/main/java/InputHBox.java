@@ -25,6 +25,7 @@ public class InputHBox extends HBox {
 
     public InputHBox() {
         setSpacing(10);
+
         setAlignment(Pos.CENTER);
         setPadding(new Insets(10, 10, 10, 10));
         createAndAddChildren();
@@ -40,8 +41,8 @@ public class InputHBox extends HBox {
     private void createTextFields() {
         this.districtText = new TextField();
         this.yearText = new TextField();
-        this.districtText.setPrefWidth(40);
-        this.yearText.setPrefWidth(40);
+        this.districtText.setPrefWidth(50);
+        this.yearText.setPrefWidth(50);
 
     }
 
@@ -54,52 +55,46 @@ public class InputHBox extends HBox {
         createTextFields();
         createMoveButton();
 
-        getChildren().addAll(this.districtLabel, this.districtText, this.yearText, this.yearLabel,
+        getChildren().addAll(this.districtLabel, this.districtText, this.yearLabel, this.yearText,
                 this.btnMove);
 
         addMoveButtonAction();
+
     }
 
     public void addMoveButtonAction() {
 
         btnMove.setOnAction(event -> {
-                    double percent=0.0;
-            //System.out.println("inside handle method");
+                    double percent = 0.0;
+                    //System.out.println("inside handle method");
 
-            try{CharSequence districtNum = districtText.getCharacters();
-                CharSequence yearNum = yearText.getCharacters();
-                int district=Integer.parseInt(districtNum+"");
-                int year=Integer.parseInt(yearNum+"");
+                    try {
+                        CharSequence districtNum = districtText.getCharacters();
+                        CharSequence yearNum = yearText.getCharacters();
+                        int district = Integer.parseInt(districtNum + "");
+                        int year = Integer.parseInt(yearNum + "");
 
-                if(( district<=25) && year>=2001 && year<=2019 )
-                {
-                    percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
-                    displayResultDialogueBox(districtNum, yearNum, percent);
-                }
+                        if ((district <= 25) && year >= 2001 && year <= 2019) {
+                            percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
+                            displayResultDialogueBox(districtNum, yearNum, percent);
+                        } else {
+                            JFrame f = new JFrame();
+                            JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
+                        }
 
-                  else{
-                    JFrame f= new JFrame();
-                    JOptionPane.showMessageDialog(f, "Invalid Choice. \n" );
-                }
+                    } catch (StringIndexOutOfBoundsException | IllegalArgumentException s) {
+                        JFrame f = new JFrame();
+                        JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
 
-            }
-
-
-
-                   catch(StringIndexOutOfBoundsException | IllegalArgumentException s)
-                    {
-                        JFrame f= new JFrame();
-                        JOptionPane.showMessageDialog(f, "Invalid Choice. \n" );
                     }
 
-
-            districtText.clear();
-            yearText.clear();
-        }
-
+                    districtText.clear();
+                    yearText.clear();
+                }
         );
 
     }
+
     public void displayResultDialogueBox(CharSequence districtNum, CharSequence yearNum, double percent) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);

@@ -3,17 +3,21 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+
 
 public enum PredictionChart
 {
     ;
 
     public static void display()
-    {
+    { long start=System.currentTimeMillis();
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -47,6 +51,8 @@ public enum PredictionChart
         window.setScene(scene);
         window.setHeight(500);
         window.setWidth(1200);
+        long stop=System.currentTimeMillis();
+        System.out.println("time to calculate crime prediction "+(stop-start)+" milliseconds");
         window.showAndWait();
     }
 
@@ -54,12 +60,21 @@ public enum PredictionChart
 
         Stage window = new Stage();
         System.out.println("inside districtPercentage");
+    window.setTitle("Input to be entered");
 
+        TextArea area= new TextArea();
         InputHBox hb = new InputHBox();
+area.setMaxHeight(25.0);
 
+        area.appendText("Please enter District num between 001 and 025.\n Enter the Year from 2001 to 2019. ");
+        /*
         StackPane layout = new StackPane();
-        layout.getChildren().add(hb);
+        layout.getChildren().addAll(hb,area);
 
+
+         */
+        VBox layout= new VBox();
+        layout.getChildren().addAll(area,hb);
         Scene scene = new Scene(layout,400,200);
         window.setScene(scene);
         window.showAndWait();

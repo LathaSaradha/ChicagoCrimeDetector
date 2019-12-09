@@ -1,10 +1,12 @@
 import java.io.Reader;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-public class PredictCrimeInNextYear
-{
+public class PredictCrimeInNextYear implements Wait {
     public static TreeMap<Integer,Integer> totalCrimesInEachYear;
 
     public PredictCrimeInNextYear()
@@ -33,19 +35,32 @@ public class PredictCrimeInNextYear
         return maxYear;
     }
 
-    public static void totalCrimesInYear(int minYear, int maxYear)
+    public void totalCrimesInYear(int minYear, int maxYear)
     {
-        int count;
+      //  int count;
         TreeMap<Integer,Integer> totalCrimes= new TreeMap<>();
-        for(int i =minYear;i<=maxYear;i++) {
-            String totalCrimesQuery = "$select=count(id) as total_crime where year="+i;
-            System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+i);
-            SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
-            Reader reader = httpRequest.sendHttpRequest();
-            count = JsonParser.crimeCounter(reader,"total_crime");
-            totalCrimes.put(i,count);
+        ExecutorService service= null;
+        try {
+            service = Executors.newFixedThreadPool(50);
+            for (int i = minYear; i <= maxYear; i++) {
+
+                String totalCrimesQuery = "$select=count(id) as total_crime where year=" + i;
+                System.out.println("Sending HTTPRequest for finding count of crimes in Year :" + i);
+
+                int finalI = i;
+                service.submit(()->{
+                    SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
+                    Reader reader = httpRequest.sendHttpRequest();
+                    int count = JsonParser.crimeCounter(reader, "total_crime");
+
+               totalCrimes.put(finalI, count);});
+            }
+            totalCrimesInEachYear = totalCrimes;
+        } finally {
+            wait(service, 4);
         }
-        totalCrimesInEachYear = totalCrimes;
+
+
     }
 
     public static TreeMap<Integer,Integer> getTotalCrimesInYears()
@@ -132,4 +147,20 @@ public class PredictCrimeInNextYear
         System.out.println((int)linearRegression.predict(2020));
     }
 
+    @Override
+    public void wait(ExecutorService service, int seconds) {
+        try {
+            if (service != null) {
+                service.awaitTermination(4, TimeUnit.SECONDS);
+
+                if (service.isTerminated()) {
+                    System.out.println(totalCrimesInEachYear);
+
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

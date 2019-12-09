@@ -2,7 +2,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+import java.io.IOException;
+
 
 public class SendHttpRequest
 {
@@ -12,10 +18,10 @@ public class SendHttpRequest
         this.URL = URL+query;
     }
 
-    public  Reader sendHttpRequest()
+    public Reader sendHttpRequest()
     {
-        System.out.println("Sending HTTP request");
-        System.out.println(URL);
+       // System.out.println("Sending HTTP request");
+        //System.out.println(URL);
         Reader reader = null;
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
