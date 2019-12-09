@@ -24,14 +24,14 @@ public enum ArrestsPieChart {
         Arrests arrests = new Arrests();
         int totalArrestsInTopFive =  arrests.getArrests()
                 .entrySet()
-                .parallelStream()
+                .stream()
                 .limit(5)
                 .mapToInt(Map.Entry::getValue)
                 .sum();
 
         arrests.getArrests()
                 .entrySet()
-                .parallelStream()
+                .stream()
                 .limit(5)
                 .forEach((e) -> {
                     System.out.println(e);
