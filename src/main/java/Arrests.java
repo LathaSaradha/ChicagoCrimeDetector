@@ -15,8 +15,9 @@ public class Arrests implements Wait {
 
     public Arrests() {
         this.arrests = new LinkedHashMap<>();
-        this.generateArrestCounts();
-        this.filterMap();
+        //this.generateArrestCounts();
+        this.generateArrestCountforAll();
+      //  this.filterMap();
     }
 
     public Reader sendQuery(String query) {
@@ -36,41 +37,41 @@ public class Arrests implements Wait {
         return crimeTypes;
     }
 
-    public void generateArrestCounts()  {
+    public void generateArrestCounts() {
         String queryFirstPart = "$select=count(id) as arrests where primary_type=\"";
         String queryLastPart = "\" and arrest=true";
-        getCrimeTypes().forEach(e->{
-            Thread thread = new Thread(()->{
+        getCrimeTypes().forEach(e -> {
+            Thread thread = new Thread(() -> {
                 Reader reader = this.sendQuery(queryFirstPart + e + queryLastPart);
                 generateArrestCountsHelper(reader, e);
             });
-           thread.start();
+            thread.start();
             try {
                 thread.join();
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
         });
-
-//        ExecutorService service;
-//        service = Executors.newFixedThreadPool(30);
-//
-//        try {
-//           service = Executors.newSingleThreadExecutor();
-//            for (String crimeType : getCrimeTypes()) {
-//                service.submit(() -> {
-//                    Reader reader = this.sendQuery(queryFirstPart + crimeType + queryLastPart);
-//                    generateArrestCountsHelper(reader, crimeType);
-//                });
-//            }
-//            service.shutdown();
-//        } finally {
-//            wait(service, 1);
-//        }
     }
+        public void generateArrestCountforAll()
+        {
+            String queryFirst = "$select=primary_type as type,count(id) as count where arrest=True " +
+                    "group by primary_type order by count(ID) DESC\n";
+            Reader reader = this.sendQuery(queryFirst);
+
+           // Reader reader1=reader;
+            Map<String, Integer> results = JsonParser.getValues(reader, "type", "count");
+          results.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .forEach((e) ->  this.arrests.put(e.getKey(), e.getValue()));
+            System.out.println("results are ");
+            System.out.println(this.arrests);
+
+        }
 
     public void generateArrestCountsHelper(Reader reader, String crimeType) {
-        String requestFieldName = "arrests";
+        String requestFieldName = "count";
         int arrestCount;
         arrestCount = JsonParser.crimeCounter(reader, requestFieldName);
         this.arrests.put(crimeType, arrestCount);
@@ -78,6 +79,7 @@ public class Arrests implements Wait {
 
     public void filterMap() {
         LinkedHashMap<String, Integer> temp = new LinkedHashMap<>();
+        System.out.println("Doing filterMap");
         this.getArrests()
                 .entrySet()
                 .stream()
@@ -103,3 +105,22 @@ public class Arrests implements Wait {
 
     }
 }
+
+
+
+//        ExecutorService service;
+//        service = Executors.newFixedThreadPool(30);
+//
+//        try {
+//           service = Executors.newSingleThreadExecutor();
+//            for (String crimeType : getCrimeTypes()) {
+//                service.submit(() -> {
+//                    Reader reader = this.sendQuery(queryFirstPart + crimeType + queryLastPart);
+//                    generateArrestCountsHelper(reader, crimeType);
+//                });
+//            }
+//            service.shutdown();
+//        } finally {
+//            wait(service, 1);
+//        }
+

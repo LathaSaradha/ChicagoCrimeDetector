@@ -17,10 +17,13 @@ import java.util.Map;
 public class ArrestsPieChart {
     public  ArrayList<PieChart.Data>  pieChartData = new ArrayList<>();
     public  final int[] totalArrestsInTopFive = new int[1];
-
+    long start= System.currentTimeMillis();
     public ArrestsPieChart()
     {
-     display();
+
+
+        display();
+
     }
 
     public  void display() {
@@ -43,6 +46,7 @@ public class ArrestsPieChart {
         Thread thread = new Thread(
                 ()->{
                     Arrests arrests = new Arrests();
+
                     totalArrestsInTopFive[0] = arrests.getArrests()
                             .entrySet()
                             .stream()
@@ -87,8 +91,10 @@ public class ArrestsPieChart {
                         VBox vBox = new VBox(pieChart);
                         Scene scene = new Scene(vBox,600,300);
                         window.setScene(scene);
-
+                        long stop= System.currentTimeMillis();
+                        System.out.println((stop-start)+" milisec");
                         window.showAndWait();
+
                         loaderWindow.close();});
                 }
         );
