@@ -36,7 +36,7 @@ public class PredictCrimeInNextYear implements Wait {
         TreeMap<Integer, Integer> totalCrimes = new TreeMap<>();
         ExecutorService service = null;
         try {
-            service = Executors.newScheduledThreadPool(10);
+            service = Executors.newFixedThreadPool(50);
             for (int i = minYear; i <= maxYear; i++) {
                 String totalCrimesQuery = "$select=count(id) as total_crime where year=" + i;
                 int finalI = i;
@@ -50,7 +50,8 @@ public class PredictCrimeInNextYear implements Wait {
             }
             totalCrimesInEachYear = totalCrimes;
         } finally {
-            wait(service, 10);
+            assert service != null;
+            wait(service, 60);
         }
 
 
@@ -81,16 +82,19 @@ public class PredictCrimeInNextYear implements Wait {
 
     @Override
     public void wait(ExecutorService service, int seconds) {
+        service.shutdown();
         try {
-            if (service != null) {
-                service.awaitTermination(seconds, TimeUnit.SECONDS);
+            if (service.awaitTermination(seconds, TimeUnit.SECONDS)) {
 
-                if (service.isTerminated()) {
-                    System.out.println("Terminated");
-
-                }
+                    service.shutdownNow();
+//                if (service.isTerminated()) {
+//                    System.out.println("Terminated");
+//
+//                }
             }
         } catch (InterruptedException e) {
+            service.shutdownNow();
+            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
 
