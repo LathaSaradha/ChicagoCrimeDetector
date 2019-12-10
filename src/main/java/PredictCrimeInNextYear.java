@@ -4,7 +4,6 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 public class PredictCrimeInNextYear implements Wait {
     public static TreeMap<Integer,Integer> totalCrimesInEachYear;
@@ -37,16 +36,12 @@ public class PredictCrimeInNextYear implements Wait {
 
     public void totalCrimesInYear(int minYear, int maxYear)
     {
-      //  int count;
         TreeMap<Integer,Integer> totalCrimes= new TreeMap<>();
         ExecutorService service= null;
         try {
             service = Executors.newFixedThreadPool(50);
             for (int i = minYear; i <= maxYear; i++) {
-
                 String totalCrimesQuery = "$select=count(id) as total_crime where year=" + i;
-                System.out.println("Sending HTTPRequest for finding count of crimes in Year :" + i);
-
                 int finalI = i;
                 service.submit(()->{
                     SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
@@ -92,13 +87,12 @@ public class PredictCrimeInNextYear implements Wait {
     public static double numberofCrimesInaDistrict(CharSequence districtNum, CharSequence yearNum) {
 
         int totalCount,districtCount;
-        //System.out.println("inside numberofCrimesInaDistrict method");
         System.out.println(districtNum +"  "+yearNum);
         String year= yearNum+"";
         String district= districtNum+"";
         String query = "$select=count(*) as total_count where year="+year;
 
-        totalCount = getTotalCount(year, query);
+        totalCount = getTotalCount(query);
         districtCount = getDistrictCount(year, district);
         System.out.println(districtCount);
         System.out.println(totalCount);
@@ -112,7 +106,6 @@ public class PredictCrimeInNextYear implements Wait {
         SendHttpRequest httpRequest;
         Reader reader;
 
-        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year+" in district "+district);
         query = "$select=count(*) as total_count_district where year="+year+" and District=\""+district+"\"";
         httpRequest = new SendHttpRequest(query);
         reader = httpRequest.sendHttpRequest();
@@ -121,40 +114,25 @@ public class PredictCrimeInNextYear implements Wait {
         return districtCount;
     }
 
-    public static int getTotalCount(String year, String query) {
+    public static int getTotalCount(String query) {
         int totalCount;
-        System.out.println("Sending HTTPRequest for finding count of crimes in Year :"+year);
         SendHttpRequest httpRequest = new SendHttpRequest(query);
         Reader reader = httpRequest.sendHttpRequest();
         totalCount = JsonParser.crimeCounter(reader,"total_count");
         return totalCount;
     }
 
-    public static void main(String[] args) {
-        PredictCrimeInNextYear predictCrimeInNextYear = new PredictCrimeInNextYear();
-        System.out.println(getTotalCrimesInYears());
-        double[] x = new double[getTotalCrimesInYears().size()];
-        double[] y = new double[getTotalCrimesInYears().size()];
-        int i=0;
-       for(Map.Entry<Integer,Integer> pair : getTotalCrimesInYears().entrySet())
-       {
-           x[i] = pair.getKey();
-           y[i] = pair.getValue();
-           i++;
-       }
-        IntStream.range(0, x.length).mapToObj(j -> "x: " + x[j] + "," + "y: " + y[j]).forEach(System.out::println);
-       LinearRegression linearRegression = new LinearRegression(x,y);
-        System.out.println((int)linearRegression.predict(2020));
-    }
+
 
     @Override
     public void wait(ExecutorService service, int seconds) {
         try {
             if (service != null) {
-                service.awaitTermination(4, TimeUnit.SECONDS);
+                service.awaitTermination(seconds, TimeUnit.SECONDS);
 
                 if (service.isTerminated()) {
-                    System.out.println(totalCrimesInEachYear);
+                    //System.out.println(totalCrimesInEachYear);
+                    System.out.println("Terminated");
 
                 }
             }

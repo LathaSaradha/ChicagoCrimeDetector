@@ -9,7 +9,7 @@ public class LinearRegression {
         }
         int total = prediction.length;
         // first pass
-        double sumPredict = 0.0, sumResponse = 0.0, sum = 0.0;
+        double sumPredict = 0.0, sumResponse = 0.0;
         FirstPass firstPass = new FirstPass(prediction, response, total, sumPredict, sumResponse).invoke();
         double predictRate = firstPass.getPredictRate();
         double responseRate = firstPass.getResponseRate();

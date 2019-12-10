@@ -1,6 +1,7 @@
 import java.util.concurrent.ExecutorService;
 
-public interface Wait {
-
-    public abstract void wait(ExecutorService service,int seconds);
+@FunctionalInterface
+public interface Wait
+{
+    void wait(ExecutorService service,int seconds);
 }

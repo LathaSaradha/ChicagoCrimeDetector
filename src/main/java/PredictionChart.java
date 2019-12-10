@@ -1,82 +1,73 @@
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-
-public enum PredictionChart
+public class PredictionChart
 {
-    ;
-
     public static void display()
-    { long start=System.currentTimeMillis();
-        Stage window = new Stage();
+    {
+        //Spinner
+        Stage loaderWindow = new Stage();
+        loaderWindow.setTitle("Fetching Data");
+        VBox vBox2 = new VBox();
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        vBox2.setAlignment(Pos.CENTER);
+        Label label = new Label("Please wait while fetching data from City of Chicago data set");
+        vBox2.getChildren().addAll(progressIndicator,label);
+        Scene scene2 = new Scene(vBox2);
+        loaderWindow.setScene(scene2);
+        loaderWindow.show();
 
+        //Bar Graph
+        Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Crimes in Different Years");
-
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("YEAR");
-
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Number of Crimes");
-
         BarChart<String,Number> barChart = new BarChart<>(xAxis, yAxis);
         XYChart.Series<String,Number>  dataSeries = new XYChart.Series<>();
         dataSeries.setName("Total Crimes in Year");
-
-        new PredictCrimeInNextYear();
-        int predictedIn2020 = PredictCrimeInNextYear.predictTotalCrimes();
-
-        //Removing the checked exception for raw types.
-
-        PredictCrimeInNextYear.getTotalCrimesInYears().
-                forEach((key, value) -> dataSeries.getData().add(new XYChart.Data<>(key.toString(), value)));
-
-
-        dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)",predictedIn2020));
-        barChart.getData().add(dataSeries);
-
-
         VBox vBox = new VBox(barChart);
         Scene scene = new Scene(vBox,400,200);
         window.setScene(scene);
         window.setHeight(500);
         window.setWidth(1200);
-        long stop=System.currentTimeMillis();
-        System.out.println("time to calculate crime prediction "+(stop-start)+" milliseconds");
-        window.showAndWait();
-    }
 
-    public static void districtPercentage(){
+        //Non-javaFX thread - Generates necessary data
+        Thread thread = new Thread(()->
+        {
+            new PredictCrimeInNextYear();
+            int predictedIn2020 = PredictCrimeInNextYear.predictTotalCrimes();
+            PredictCrimeInNextYear.getTotalCrimesInYears().
+                    forEach((key, value) -> dataSeries.getData().add(new XYChart.Data<>(key.toString(), value)));
+            dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)",predictedIn2020));
+            barChart.getData().add(dataSeries);
+        });
+       thread.start();
 
-        Stage window = new Stage();
-        System.out.println("inside districtPercentage");
-    window.setTitle("Input to be entered");
-
-        TextArea area= new TextArea();
-        InputHBox hb = new InputHBox();
-area.setMaxHeight(25.0);
-
-        area.appendText("Please enter District num between 001 and 025.\n Enter the Year from 2001 to 2019. ");
-        /*
-        StackPane layout = new StackPane();
-        layout.getChildren().addAll(hb,area);
-
-
-         */
-        VBox layout= new VBox();
-        layout.getChildren().addAll(area,hb);
-        Scene scene = new Scene(layout,400,200);
-        window.setScene(scene);
-        window.showAndWait();
+       //Non javafx thread to check if data collection is completed
+       Thread thread1 = new Thread(
+               ()->
+               {
+                   while (thread.isAlive())
+                   {
+                    // Stay in loop while collecting data
+                   }
+                   Platform.runLater(()->{window.show();loaderWindow.close();}); //Collecting finished - Show bar graph and close spinner
+               }
+       );
+      thread1.start();
     }
 }

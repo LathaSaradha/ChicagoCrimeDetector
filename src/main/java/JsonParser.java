@@ -5,10 +5,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum JsonParser
+public class JsonParser
 {
-    ;
-
     public static int crimeCounter(Reader reader,String requestedFieldName)
     {
         String fieldName;
@@ -21,7 +19,6 @@ public enum JsonParser
                     fieldName = jsonReader.nextName();
                     if (fieldName.equals(requestedFieldName)) {
                         counter = Integer.parseInt(jsonReader.nextString());
-                        System.out.println(requestedFieldName+": "+counter);
                     } else {
                         jsonReader.skipValue();
                     }
@@ -48,9 +45,6 @@ public enum JsonParser
                    fieldName = jsonReader.nextName();
                    if (fieldName.equals(requestedFieldName)) {
                        crimeTypes.add(jsonReader.nextString());
-                       //System.out.println(crimeTypes.add(jsonReader.nextString()));
-                       //System.out.println("Receiving Data");
-
                    } else {
                        jsonReader.skipValue();
                    }
@@ -63,6 +57,4 @@ public enum JsonParser
        }
     return crimeTypes;
    }
-
-
 }

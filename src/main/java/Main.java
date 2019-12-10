@@ -1,13 +1,12 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 
 public class Main extends Application {
@@ -23,12 +22,18 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         primaryStage.setTitle("Crime Detector");
+        Stage stage = new Stage();
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        VBox vBox2 = new VBox();
+        vBox2.getChildren().add(progressIndicator);
+        Scene scene2 = new Scene(vBox2,300,300);
+        stage.setScene(scene2);
         //Predict Crimes Using Linear Regression
        // int predictedCrimes = PredictCrimeInNextYear.predictTotalCrimes();
        // String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
         predictCrimesButton = new Button("Predict Total Number of Crimes in 2020");
         topFiveArrestsButton = new Button("View Arrests For Top Five Crimes Types");
-        buttonForDistrict = new Button ("Find crime percentage in a district and year");
+        buttonForDistrict = new Button ("Find the crime percentage in a district and year");
 
         StackPane layout = new StackPane();
         VBox vBox = new VBox(5);
@@ -36,21 +41,20 @@ public class Main extends Application {
         layout.getChildren().add(vBox);
         layout.setAlignment(Pos.CENTER);
 
-        predictCrimesButton.setOnAction(e->PredictionChart.display());
 
-        topFiveArrestsButton.setOnAction(e->ArrestsPieChart.display());
-
-        buttonForDistrict.setOnAction(e->PredictionChart.districtPercentage());
+        predictCrimesButton.setOnAction(e-> {
+            PredictionChart.display();
+        });
+       // predictCrimesButton.setOnAction(e->PredictionChart.display());
+        topFiveArrestsButton.setOnAction(e-> new ArrestsPieChart());
+        buttonForDistrict.setOnAction(e-> CrimeRateInDistrictUI.display());
 
         Scene scene = new Scene(layout,300,100);
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
         });
 
     }

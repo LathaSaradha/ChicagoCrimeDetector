@@ -65,7 +65,7 @@ public class InputHBox extends HBox {
     public void addMoveButtonAction() {
 
         btnMove.setOnAction(event -> {
-                    double percent = 0.0;
+                    double percent;
                     //System.out.println("inside handle method");
 
                     try {
