@@ -21,9 +21,7 @@ public class ArrestsPieChart {
     ArrestsPieChart()
     {
 
-
         display();
-
     }
 
     private  void display() {
