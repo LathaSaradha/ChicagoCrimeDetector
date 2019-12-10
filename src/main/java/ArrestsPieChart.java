@@ -17,14 +17,12 @@ import java.util.Map;
 public class ArrestsPieChart {
     private  ArrayList<PieChart.Data>  pieChartData = new ArrayList<>();
     private  final int[] totalArrestsInTopFive = new int[1];
-    long start= System.currentTimeMillis();
     ArrestsPieChart()
     {
-
-        display();
+        displaySpinner();
     }
 
-    private  void display() {
+    private  void displaySpinner() {
         //Spinner
         Stage loaderWindow = new Stage();
         loaderWindow.setTitle("Fetching Data");
@@ -56,10 +54,7 @@ public class ArrestsPieChart {
                             .entrySet()
                             .stream()
                             .limit(5)
-                            .forEach((e) -> {
-                                System.out.println("Getting data " + e);
-                                pieChartData.add(new PieChart.Data(e.getKey(), e.getValue()));
-                            });
+                            .forEach((e) -> pieChartData.add(new PieChart.Data(e.getKey(), e.getValue())));
 
                 }
         );
@@ -71,14 +66,14 @@ public class ArrestsPieChart {
                 ()->{
                     while (thread.isAlive())
                     {
-                        System.out.println("Thread is running");
                     }
 
                     Platform.runLater(()->{
                         //Pie chart
+                        loaderWindow.close();
                         pieChart();
 
-                        loaderWindow.close();});
+                        });
                 }
         );
         thread1.start();
@@ -87,6 +82,7 @@ public class ArrestsPieChart {
     }
 
     private void pieChart() {
+        //Pie Chart
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Arrests In Top Five Crime Types");
@@ -94,15 +90,13 @@ public class ArrestsPieChart {
         window.setWidth(800);
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(pieChartData);
         PieChart pieChart = new PieChart(data);
-        pieChart.setTitle("Total Arrests: "+ totalArrestsInTopFive[0]);
+        pieChart.setTitle("Total arrests in top five crimes: "+ totalArrestsInTopFive[0]);
         pieChart.setClockwise(true);
         pieChart.setLabelsVisible(true);
 
         VBox vBox = new VBox(pieChart);
         Scene scene = new Scene(vBox,600,300);
         window.setScene(scene);
-        long stop= System.currentTimeMillis();
-        System.out.println((stop-start)+" millisec");
         window.showAndWait();
     }
 

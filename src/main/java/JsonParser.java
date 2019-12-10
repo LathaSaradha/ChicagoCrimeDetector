@@ -35,36 +35,8 @@ public class JsonParser
         return counter;
     }
 
-/*
-   public static List<String> getCrimeTypes(Reader reader, String requestedFieldName)
-   {
-       String fieldName;
-       List<String> crimeTypes = new ArrayList<>();
-       try (JsonReader jsonReader = new JsonReader(reader)) {
-           jsonReader.beginArray();
-           while (jsonReader.hasNext()) {
-               jsonReader.beginObject();
-               while (jsonReader.hasNext()) {
-                   fieldName = jsonReader.nextName();
-                   if (fieldName.equals(requestedFieldName)) {
-                       crimeTypes.add(jsonReader.nextString());
-                   } else {
-                       jsonReader.skipValue();
-                   }
-               }
-               jsonReader.endObject();
-           }
-           jsonReader.endArray();
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-    return crimeTypes;
-   }
 
-
-*/
-
-    public static Map<String,Integer> getValues(Reader reader, String requestedFieldName1,String requestedFieldName2)
+    public static Map<String,Integer> getArrestCount(Reader reader, String requestedFieldName1, String requestedFieldName2)
     {
         String fieldName;
         Map<String,Integer> values = new HashMap<>();

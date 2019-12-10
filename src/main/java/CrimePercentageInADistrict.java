@@ -2,18 +2,15 @@ import java.io.Reader;
 
 public class CrimePercentageInADistrict
 {
-    public static double numberofCrimesInaDistrict(CharSequence districtNum, CharSequence yearNum) {
+    public static double numberOfCrimesInADistrict(CharSequence districtNum, CharSequence yearNum) {
 
         int totalCount,districtCount;
-        System.out.println(districtNum +"  "+yearNum);
         String year= yearNum+"";
         String district= districtNum+"";
         String query = "$select=count(*) as total_count where year="+year;
 
         totalCount = getTotalCount(query);
         districtCount = getDistrictCount(year, district);
-        //System.out.println(districtCount);
-       // System.out.println(totalCount);
         return ((double)districtCount/totalCount) *100;
 
     }
