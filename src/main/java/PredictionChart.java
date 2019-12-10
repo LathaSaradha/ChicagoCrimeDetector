@@ -61,9 +61,10 @@ public class PredictionChart {
         Thread thread1 = new Thread(
                 () ->
                 {
-                    while (thread.isAlive()) {
+                    //noinspection StatementWithEmptyBody,LoopConditionNotUpdatedInsideLoop
+                    while (thread.isAlive());
                         // Stay in loop while collecting data
-                    }
+
                     Platform.runLater(() -> {
                         window.show();
                         loaderWindow.close();

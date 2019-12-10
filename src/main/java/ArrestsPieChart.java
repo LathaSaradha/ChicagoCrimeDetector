@@ -59,10 +59,11 @@ public class ArrestsPieChart {
         thread.start();
 
 
+
         Thread thread1 = new Thread(
                 () -> {
-                    while (thread.isAlive()) {
-                    }
+                    //noinspection StatementWithEmptyBody,LoopConditionNotUpdatedInsideLoop
+                    while (thread.isAlive()) ;
 
                     Platform.runLater(() -> {
                         //Pie chart
