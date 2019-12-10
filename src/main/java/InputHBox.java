@@ -71,13 +71,13 @@ public class InputHBox extends HBox {
                         CharSequence districtNum = districtText.getCharacters();
                         CharSequence yearNum = yearText.getCharacters();
                         DecimalFormat df = new DecimalFormat("000");
-                        double num=Double.parseDouble(districtNum+"");
-                        String dNum=df.format(num);
-                        int district = Integer.parseInt( df.format(num));
+                        double num = Double.parseDouble(districtNum + "");
+                        String dNum = df.format(num);
+                        int district = Integer.parseInt(df.format(num));
                         int year = Integer.parseInt(yearNum + "");
 
                         if ((district <= 25) && year >= 2001 && year <= 2019) {
-                            percent = CrimePercentageInADistrict.numberOfCrimesInADistrict(dNum, yearNum+"");
+                            percent = CrimePercentageInADistrict.numberOfCrimesInADistrict(dNum, yearNum + "");
                             displayResultDialogueBox(districtNum, yearNum, percent);
                         } else {
                             Alert a = new Alert(Alert.AlertType.WARNING);
@@ -85,11 +85,9 @@ public class InputHBox extends HBox {
                             label.setWrapText(true);
                             a.getDialogPane().setContent(label);
                             a.show();
-                            // JFrame f = new JFrame();
-                           // JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
                         }
 
-                    } catch (StringIndexOutOfBoundsException | IllegalArgumentException |NullPointerException s) {
+                    } catch (StringIndexOutOfBoundsException | IllegalArgumentException | NullPointerException s) {
                         JFrame f = new JFrame();
                         JOptionPane.showMessageDialog(f, "Enter Valid Values. \n");
 

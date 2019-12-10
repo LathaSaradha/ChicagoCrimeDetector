@@ -8,12 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class JsonParser
-{
-    public static int crimeCounter(Reader reader,String requestedFieldName)
-    {
+public class JsonParser {
+    public static int crimeCounter(Reader reader, String requestedFieldName) {
         String fieldName;
-        int counter=0;
+        int counter = 0;
         try (JsonReader jsonReader = new JsonReader(reader)) {
             jsonReader.beginArray();
             while (jsonReader.hasNext()) {
@@ -36,10 +34,9 @@ public class JsonParser
     }
 
 
-    public static Map<String,Integer> getArrestCount(Reader reader, String requestedFieldName1, String requestedFieldName2)
-    {
+    public static Map<String, Integer> getArrestCount(Reader reader, String requestedFieldName1, String requestedFieldName2) {
         String fieldName;
-        Map<String,Integer> values = new HashMap<>();
+        Map<String, Integer> values = new HashMap<>();
 
         try (JsonReader jsonReader = new JsonReader(reader)) {
             jsonReader.beginArray();
@@ -51,11 +48,11 @@ public class JsonParser
 
                     fieldName = jsonReader.nextName();
                     if (fieldName.equals(requestedFieldName1)) {
-                        String type=jsonReader.nextString();
+                        String type = jsonReader.nextString();
                         String fieldName2 = jsonReader.nextName();
-                        if(fieldName2.equals(requestedFieldName2)){
-                            int count=jsonReader.nextInt();
-                            values.put(type,count);
+                        if (fieldName2.equals(requestedFieldName2)) {
+                            int count = jsonReader.nextInt();
+                            values.put(type, count);
                         }
 
 

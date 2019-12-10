@@ -18,13 +18,12 @@ public class LinearRegression {
         SummaryStatistics summaryStatistics = new SummaryStatistics(prediction, response, total, predictRate, responseRate).invoke();
         double predictSummary = summaryStatistics.getPredictSummary();
         double summary = summaryStatistics.getSummary();
-        slope  = summary / predictSummary;
+        slope = summary / predictSummary;
         intercept = responseRate - slope * predictRate;
 
     }
 
-    public double predict(double x)
-    {
+    public double predict(double x) {
 
         return slope * x + intercept;
     }
@@ -46,15 +45,14 @@ public class LinearRegression {
             this.sumResponse = sumResponse;
         }
 
-        public double getPredictRate()
-        {
+        public double getPredictRate() {
             return predictRate;
         }
 
-        public double getResponseRate()
-        {
+        public double getResponseRate() {
             return responseRate;
         }
+
         public FirstPass invoke() {
             IntStream.range(0, total).forEach(i -> {
                 sumPredict += prediction[i];
@@ -83,13 +81,11 @@ public class LinearRegression {
             this.responseRate = responseRate;
         }
 
-        public double getPredictSummary()
-        {
+        public double getPredictSummary() {
             return predictSummary;
         }
 
-        public double getSummary()
-        {
+        public double getSummary() {
             return summary;
         }
 

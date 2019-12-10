@@ -8,7 +8,7 @@ import java.util.Map;
 public class Arrests {
     private Map<String, Integer> arrests;
 
-    public  Map<String, Integer> getArrests() {
+    public Map<String, Integer> getArrests() {
         return arrests;
     }
 
@@ -22,17 +22,16 @@ public class Arrests {
         return sendHttpRequest.sendHttpRequest();
     }
 
-        private void generateArrestCountForTopFiveCrimes()
-        {
-            String queryFirst = "$select=primary_type as type,count(id) as count where arrest=True " +
-                    "group by primary_type order by count(ID) DESC\n";
-            Reader reader = this.sendQuery(queryFirst);
-            Map<String, Integer> results = JsonParser.getArrestCount(reader, "type", "count");
-          results.entrySet()
+    private void generateArrestCountForTopFiveCrimes() {
+        String queryFirst = "$select=primary_type as type,count(id) as count where arrest=True " +
+                "group by primary_type order by count(ID) DESC\n";
+        Reader reader = this.sendQuery(queryFirst);
+        Map<String, Integer> results = JsonParser.getArrestCount(reader, "type", "count");
+        results.entrySet()
                 .stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-                .forEach((e) ->  this.arrests.put(e.getKey(), e.getValue()));
-        }
+                .forEach((e) -> this.arrests.put(e.getKey(), e.getValue()));
+    }
 }
 
 

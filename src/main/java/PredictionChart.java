@@ -13,10 +13,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
-public class PredictionChart
-{
-    public static void display()
-    {
+public class PredictionChart {
+    public static void display() {
         //Spinner
         Stage loaderWindow = new Stage();
         loaderWindow.setTitle("Fetching Data");
@@ -24,7 +22,7 @@ public class PredictionChart
         ProgressIndicator progressIndicator = new ProgressIndicator();
         vBox2.setAlignment(Pos.CENTER);
         Label label = new Label("Please wait while fetching data from City of Chicago data set");
-        vBox2.getChildren().addAll(progressIndicator,label);
+        vBox2.getChildren().addAll(progressIndicator, label);
         Scene scene2 = new Scene(vBox2);
         loaderWindow.setScene(scene2);
         loaderWindow.initStyle(StageStyle.UNDECORATED);
@@ -38,38 +36,40 @@ public class PredictionChart
         xAxis.setLabel("YEAR");
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Number of Crimes");
-        BarChart<String,Number> barChart = new BarChart<>(xAxis, yAxis);
-        XYChart.Series<String,Number>  dataSeries = new XYChart.Series<>();
+        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
         dataSeries.setName("Total Crimes in Year");
         VBox vBox = new VBox(barChart);
-        Scene scene = new Scene(vBox,400,200);
+        Scene scene = new Scene(vBox, 400, 200);
         window.setScene(scene);
         window.setHeight(500);
         window.setWidth(1200);
 
         //Non-javaFX thread - Generates necessary data
-        Thread thread = new Thread(()->
+        Thread thread = new Thread(() ->
         {
             new PredictCrimeInNextYear();
             int predictedIn2020 = PredictCrimeInNextYear.predictTotalCrimes();
             PredictCrimeInNextYear.getTotalCrimesInYears().
                     forEach((key, value) -> dataSeries.getData().add(new XYChart.Data<>(key.toString(), value)));
-            dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)",predictedIn2020));
+            dataSeries.getData().add(new XYChart.Data<>("2020 (Predicted)", predictedIn2020));
             barChart.getData().add(dataSeries);
         });
-       thread.start();
+        thread.start();
 
-       //Non javafx thread to check if data collection is completed
-       Thread thread1 = new Thread(
-               ()->
-               {
-                   while (thread.isAlive())
-                   {
-                    // Stay in loop while collecting data
-                   }
-                   Platform.runLater(()->{window.show();loaderWindow.close();}); //Collecting finished - Show bar graph and close spinner
-               }
-       );
-      thread1.start();
+        //Non javafx thread to check if data collection is completed
+        Thread thread1 = new Thread(
+                () ->
+                {
+                    while (thread.isAlive()) {
+                        // Stay in loop while collecting data
+                    }
+                    Platform.runLater(() -> {
+                        window.show();
+                        loaderWindow.close();
+                    }); //Collecting finished - Show bar graph and close spinner
+                }
+        );
+        thread1.start();
     }
 }
