@@ -1,12 +1,11 @@
 import java.io.Reader;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
-public class Arrests implements Wait {
+import java.util.Map;
+
+
+public class Arrests {
     private Map<String, Integer> arrests;
 
     public  Map<String, Integer> getArrests() {
@@ -20,11 +19,11 @@ public class Arrests implements Wait {
       //  this.filterMap();
     }
 
-    public Reader sendQuery(String query) {
+    private Reader sendQuery(String query) {
         SendHttpRequest sendHttpRequest = new SendHttpRequest(query);
         return sendHttpRequest.sendHttpRequest();
     }
-
+/*
     public List<String> getCrimeTypes() {
         String query;
         query = "$select=distinct(primary_type) as crime_types";
@@ -37,6 +36,8 @@ public class Arrests implements Wait {
         return crimeTypes;
     }
 
+ */
+/*
     public void generateArrestCounts() {
         String queryFirstPart = "$select=count(id) as arrests where primary_type=\"";
         String queryLastPart = "\" and arrest=true";
@@ -53,7 +54,9 @@ public class Arrests implements Wait {
             }
         });
     }
-        public void generateArrestCountforAll()
+
+ */
+        private void generateArrestCountforAll()
         {
             String queryFirst = "$select=primary_type as type,count(id) as count where arrest=True " +
                     "group by primary_type order by count(ID) DESC\n";
@@ -69,7 +72,7 @@ public class Arrests implements Wait {
             System.out.println(this.arrests);
 
         }
-
+/*
     public void generateArrestCountsHelper(Reader reader, String crimeType) {
         String requestFieldName = "count";
         int arrestCount;
@@ -77,6 +80,8 @@ public class Arrests implements Wait {
         this.arrests.put(crimeType, arrestCount);
     }
 
+ */
+/*
     public void filterMap() {
         LinkedHashMap<String, Integer> temp = new LinkedHashMap<>();
         System.out.println("Doing filterMap");
@@ -88,7 +93,9 @@ public class Arrests implements Wait {
         this.arrests = temp;
     }
 
-    @Override
+ */
+
+ /*   @Override
     public void wait(ExecutorService service, int seconds) {
         try {
             if (service != null) {
@@ -104,6 +111,8 @@ public class Arrests implements Wait {
         }
 
     }
+
+  */
 }
 
 

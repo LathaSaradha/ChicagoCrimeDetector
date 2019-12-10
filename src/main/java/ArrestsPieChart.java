@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class ArrestsPieChart {
-    public  ArrayList<PieChart.Data>  pieChartData = new ArrayList<>();
-    public  final int[] totalArrestsInTopFive = new int[1];
+    private  ArrayList<PieChart.Data>  pieChartData = new ArrayList<>();
+    private  final int[] totalArrestsInTopFive = new int[1];
     long start= System.currentTimeMillis();
-    public ArrestsPieChart()
+    ArrestsPieChart()
     {
 
 
@@ -26,7 +26,7 @@ public class ArrestsPieChart {
 
     }
 
-    public  void display() {
+    private  void display() {
         //Spinner
         Stage loaderWindow = new Stage();
         loaderWindow.setTitle("Fetching Data");
@@ -59,7 +59,7 @@ public class ArrestsPieChart {
                             .stream()
                             .limit(5)
                             .forEach((e) -> {
-                                System.out.println("getting data " + e);
+                                System.out.println("Getting data " + e);
                                 pieChartData.add(new PieChart.Data(e.getKey(), e.getValue()));
                             });
 
@@ -73,27 +73,12 @@ public class ArrestsPieChart {
                 ()->{
                     while (thread.isAlive())
                     {
+                        System.out.println("Thread is running");
                     }
 
                     Platform.runLater(()->{
                         //Pie chart
-                        Stage window = new Stage();
-                        window.initModality(Modality.APPLICATION_MODAL);
-                        window.setTitle("Arrests In Top Five Crime Types");
-                        window.setHeight(400);
-                        window.setWidth(800);
-                        ObservableList<PieChart.Data> data = FXCollections.observableArrayList(pieChartData);
-                        PieChart pieChart = new PieChart(data);
-                        pieChart.setTitle("Total Arrests: "+ totalArrestsInTopFive[0]);
-                        pieChart.setClockwise(true);
-                        pieChart.setLabelsVisible(true);
-
-                        VBox vBox = new VBox(pieChart);
-                        Scene scene = new Scene(vBox,600,300);
-                        window.setScene(scene);
-                        long stop= System.currentTimeMillis();
-                        System.out.println((stop-start)+" milisec");
-                        window.showAndWait();
+                        pieChart();
 
                         loaderWindow.close();});
                 }
@@ -101,6 +86,26 @@ public class ArrestsPieChart {
         thread1.start();
 
 
+    }
+
+    private void pieChart() {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Arrests In Top Five Crime Types");
+        window.setHeight(400);
+        window.setWidth(800);
+        ObservableList<PieChart.Data> data = FXCollections.observableArrayList(pieChartData);
+        PieChart pieChart = new PieChart(data);
+        pieChart.setTitle("Total Arrests: "+ totalArrestsInTopFive[0]);
+        pieChart.setClockwise(true);
+        pieChart.setLabelsVisible(true);
+
+        VBox vBox = new VBox(pieChart);
+        Scene scene = new Scene(vBox,600,300);
+        window.setScene(scene);
+        long stop= System.currentTimeMillis();
+        System.out.println((stop-start)+" millisec");
+        window.showAndWait();
     }
 
 

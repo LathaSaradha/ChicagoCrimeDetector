@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class PredictCrimeInNextYear implements Wait {
-    public static TreeMap<Integer,Integer> totalCrimesInEachYear;
+    private static TreeMap<Integer,Integer> totalCrimesInEachYear;
 
     public PredictCrimeInNextYear()
     {
@@ -15,7 +15,7 @@ public class PredictCrimeInNextYear implements Wait {
         totalCrimesInYear(minYear,maxYear);
     }
 
-    public static int getMinYear()
+    private static int getMinYear()
     {
         int minYear;
         String getMinYearQuery = "$select=min(year) as min_year";
@@ -24,7 +24,7 @@ public class PredictCrimeInNextYear implements Wait {
         minYear = JsonParser.crimeCounter(reader,"min_year");
         return minYear;
     }
-    public static int getMaxYear()
+    private static int getMaxYear()
     {
         int maxYear;
         String getMinYearQuery = "$select=max(year) as max_year";
@@ -34,7 +34,7 @@ public class PredictCrimeInNextYear implements Wait {
         return maxYear;
     }
 
-    public void totalCrimesInYear(int minYear, int maxYear)
+    private void totalCrimesInYear(int minYear, int maxYear)
     {
         TreeMap<Integer,Integer> totalCrimes= new TreeMap<>();
         ExecutorService service= null;
@@ -58,12 +58,12 @@ public class PredictCrimeInNextYear implements Wait {
 
     }
 
-    public static TreeMap<Integer,Integer> getTotalCrimesInYears()
+    static TreeMap<Integer,Integer> getTotalCrimesInYears()
     {
         return totalCrimesInEachYear;
     }
 
-    public static LinearRegression generateArraysForRegression()
+    private static LinearRegression generateArraysForRegression()
     {
         double[] x = new double[getTotalCrimesInYears().size()];
         double[] y = new double[getTotalCrimesInYears().size()];

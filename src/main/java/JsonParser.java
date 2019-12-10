@@ -2,12 +2,11 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 public class JsonParser
 {
@@ -36,7 +35,7 @@ public class JsonParser
         return counter;
     }
 
-
+/*
    public static List<String> getCrimeTypes(Reader reader, String requestedFieldName)
    {
        String fieldName;
@@ -63,7 +62,7 @@ public class JsonParser
    }
 
 
-
+*/
 
     public static Map<String,Integer> getValues(Reader reader, String requestedFieldName1,String requestedFieldName2)
     {
@@ -82,8 +81,11 @@ public class JsonParser
                     if (fieldName.equals(requestedFieldName1)) {
                         String type=jsonReader.nextString();
                         String fieldName2 = jsonReader.nextName();
-                        int count=jsonReader.nextInt();
-                        values.put(type,count);
+                        if(fieldName2.equals(requestedFieldName2)){
+                            int count=jsonReader.nextInt();
+                            values.put(type,count);
+                        }
+
 
                     } else {
                         jsonReader.skipValue();
