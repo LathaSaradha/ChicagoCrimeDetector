@@ -76,20 +76,19 @@ public class InputHBox extends HBox {
                         int district = Integer.parseInt(df.format(num));
                         int year = Integer.parseInt(yearNum + "");
 
-                        if ((district <= 25) && year >= 2001 && year <= 2019) {
+                        if ( district>=1 && district <= 25 && year >= 2001 && year <= 2019) {
                             percent = CrimePercentageInADistrict.numberOfCrimesInADistrict(dNum, yearNum + "");
                             displayResultDialogueBox(districtNum, yearNum, percent);
                         } else {
-                            Alert a = new Alert(Alert.AlertType.WARNING);
-                            Label label = new Label("Please enter valid input");
-                            label.setWrapText(true);
-                            a.getDialogPane().setContent(label);
-                            a.show();
+                            throw new IllegalArgumentException();
                         }
 
                     } catch (StringIndexOutOfBoundsException | IllegalArgumentException | NullPointerException s) {
-                        JFrame f = new JFrame();
-                        JOptionPane.showMessageDialog(f, "Enter Valid Values. \n");
+                        Alert a = new Alert(Alert.AlertType.WARNING);
+                        Label label = new Label("Please enter valid input");
+                        label.setWrapText(true);
+                        a.getDialogPane().setContent(label);
+                        a.show();
 
                     }
 

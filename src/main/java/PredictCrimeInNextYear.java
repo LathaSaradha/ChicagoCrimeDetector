@@ -2,6 +2,7 @@ import java.io.Reader;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class PredictCrimeInNextYear implements Wait {
@@ -33,45 +34,24 @@ public class PredictCrimeInNextYear implements Wait {
 
     private void totalCrimesInYear(int minYear, int maxYear) {
         TreeMap<Integer, Integer> totalCrimes = new TreeMap<>();
-       // ExecutorService service = null;
-                    for (int i = minYear; i <= maxYear; i++) {
+        ExecutorService service = null;
+        try {
+            service = Executors.newScheduledThreadPool(10);
+            for (int i = minYear; i <= maxYear; i++) {
                 String totalCrimesQuery = "$select=count(id) as total_crime where year=" + i;
                 int finalI = i;
-                    Thread thread = new Thread(
-                            ()->{
-                                SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
-                                Reader reader = httpRequest.sendHttpRequest();
-                                int count = JsonParser.crimeCounter(reader, "total_crime");
+                service.submit(() -> {
+                    SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
+                    Reader reader = httpRequest.sendHttpRequest();
+                    int count = JsonParser.crimeCounter(reader, "total_crime");
 
-                                totalCrimes.put(finalI, count);
-                            }
-                    );
-                thread.start();
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                    totalCrimesInEachYear = totalCrimes;
-//        try {
-//            service = Executors.newFixedThreadPool(50);
-//            for (int i = minYear; i <= maxYear; i++) {
-//                String totalCrimesQuery = "$select=count(id) as total_crime where year=" + i;
-//                int finalI = i;
-//                service.submit(() -> {
-//                    SendHttpRequest httpRequest = new SendHttpRequest(totalCrimesQuery);
-//                    Reader reader = httpRequest.sendHttpRequest();
-//                    int count = JsonParser.crimeCounter(reader, "total_crime");
-//
-//                    totalCrimes.put(finalI, count);
-//                });
-//            }
-//            totalCrimesInEachYear = totalCrimes;
-//        } finally {
-//            wait(service, 4);
-//        }
+                    totalCrimes.put(finalI, count);
+                });
+            }
+            totalCrimesInEachYear = totalCrimes;
+        } finally {
+            wait(service, 10);
+        }
 
 
     }
