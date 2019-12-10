@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.text.DecimalFormat;
 
 public class InputHBox extends HBox {
