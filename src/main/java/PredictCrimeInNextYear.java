@@ -50,8 +50,7 @@ public class PredictCrimeInNextYear implements Wait {
             }
             totalCrimesInEachYear = totalCrimes;
         } finally {
-            assert service != null;
-            wait(service, 60);
+            wait(service, 10);
         }
 
 
@@ -82,19 +81,16 @@ public class PredictCrimeInNextYear implements Wait {
 
     @Override
     public void wait(ExecutorService service, int seconds) {
-        service.shutdown();
         try {
-            if (service.awaitTermination(seconds, TimeUnit.SECONDS)) {
+            if (service != null) {
+                service.awaitTermination(seconds, TimeUnit.SECONDS);
 
-                    service.shutdownNow();
-//                if (service.isTerminated()) {
-//                    System.out.println("Terminated");
-//
-//                }
+                if (service.isTerminated()) {
+                    System.out.println("Terminated");
+
+                }
             }
         } catch (InterruptedException e) {
-            service.shutdownNow();
-            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
 
