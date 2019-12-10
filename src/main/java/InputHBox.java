@@ -1,6 +1,7 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -66,9 +67,6 @@ public class InputHBox extends HBox {
 
         btnMove.setOnAction(event -> {
                     double percent;
-            Stage loaderWindow;
-                    //System.out.println("inside handle method");
-
                     try {
                         CharSequence districtNum = districtText.getCharacters();
                         CharSequence yearNum = yearText.getCharacters();
@@ -77,16 +75,18 @@ public class InputHBox extends HBox {
                         String dNum=df.format(num);
                         int district = Integer.parseInt( df.format(num));
                         int year = Integer.parseInt(yearNum + "");
-                       // System.out.println(district);
-                       // System.out.println(year);
-                        //districtNum=num;
 
                         if ((district <= 25) && year >= 2001 && year <= 2019) {
-                            percent = CrimePercentageInADistrict.numberofCrimesInaDistrict(dNum, yearNum+"");
+                            percent = CrimePercentageInADistrict.numberOfCrimesInADistrict(dNum, yearNum+"");
                             displayResultDialogueBox(districtNum, yearNum, percent);
                         } else {
-                            JFrame f = new JFrame();
-                            JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
+                            Alert a = new Alert(Alert.AlertType.WARNING);
+                            Label label = new Label("Please enter valid input");
+                            label.setWrapText(true);
+                            a.getDialogPane().setContent(label);
+                            a.show();
+                            // JFrame f = new JFrame();
+                           // JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
                         }
 
                     } catch (StringIndexOutOfBoundsException | IllegalArgumentException |NullPointerException s) {
