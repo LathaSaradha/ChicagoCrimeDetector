@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class ArrestsPieChart {
-    private  ArrayList<PieChart.Data>  pieChartData = new ArrayList<>();
-    private  final int[] totalArrestsInTopFive = new int[1];
-    ArrestsPieChart()
-    {
+    private ArrayList<PieChart.Data> pieChartData = new ArrayList<>();
+    private final int[] totalArrestsInTopFive = new int[1];
+
+    ArrestsPieChart() {
         displaySpinner();
     }
 
-    private  void displaySpinner() {
+    private void displaySpinner() {
         //Spinner
         Stage loaderWindow = new Stage();
         loaderWindow.setTitle("Fetching Data");
@@ -30,17 +30,15 @@ public class ArrestsPieChart {
         ProgressIndicator progressIndicator = new ProgressIndicator();
         vBox2.setAlignment(Pos.CENTER);
         Label label = new Label("Please wait while fetching data from City of Chicago data set");
-        vBox2.getChildren().addAll(progressIndicator,label);
+        vBox2.getChildren().addAll(progressIndicator, label);
         Scene scene2 = new Scene(vBox2);
         loaderWindow.setScene(scene2);
         loaderWindow.initStyle(StageStyle.UNDECORATED);
         loaderWindow.show();
 
 
-
-
         Thread thread = new Thread(
-                ()->{
+                () -> {
                     Arrests arrests = new Arrests();
 
                     totalArrestsInTopFive[0] = arrests.getArrests()
@@ -61,19 +59,17 @@ public class ArrestsPieChart {
         thread.start();
 
 
-
         Thread thread1 = new Thread(
-                ()->{
-                    while (thread.isAlive())
-                    {
+                () -> {
+                    while (thread.isAlive()) {
                     }
 
-                    Platform.runLater(()->{
+                    Platform.runLater(() -> {
                         //Pie chart
                         loaderWindow.close();
                         pieChart();
 
-                        });
+                    });
                 }
         );
         thread1.start();
@@ -90,12 +86,12 @@ public class ArrestsPieChart {
         window.setWidth(800);
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(pieChartData);
         PieChart pieChart = new PieChart(data);
-        pieChart.setTitle("Total arrests in top five crimes: "+ totalArrestsInTopFive[0]);
+        pieChart.setTitle("Total arrests in top five crimes: " + totalArrestsInTopFive[0]);
         pieChart.setClockwise(true);
         pieChart.setLabelsVisible(true);
 
         VBox vBox = new VBox(pieChart);
-        Scene scene = new Scene(vBox,600,300);
+        Scene scene = new Scene(vBox, 600, 300);
         window.setScene(scene);
         window.showAndWait();
     }

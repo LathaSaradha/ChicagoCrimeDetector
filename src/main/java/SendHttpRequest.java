@@ -6,20 +6,19 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.io.IOException;
 
 
-public class SendHttpRequest
-{
+public class SendHttpRequest {
     private String URL = "https://data.cityofchicago.org/resource/ijzp-q8t2.json?";
     private final OkHttpClient okHttpClient = new OkHttpClient();
 
-    public SendHttpRequest(String query) { this.URL = URL+query; }
+    public SendHttpRequest(String query) {
+        this.URL = URL + query;
+    }
 
 
-    public Reader sendHttpRequest()
-    {
+    public Reader sendHttpRequest() {
         Reader reader = null;
         try {
             Request.Builder builder = new Request.Builder();

@@ -23,7 +23,7 @@ public class Main extends Application {
         ProgressIndicator progressIndicator = new ProgressIndicator();
         VBox vBox2 = new VBox();
         vBox2.getChildren().add(progressIndicator);
-        Scene scene2 = new Scene(vBox2,300,300);
+        Scene scene2 = new Scene(vBox2, 300, 300);
         stage.setScene(scene2);
         //Predict Crimes Using Linear Regression
 
@@ -44,11 +44,11 @@ public class Main extends Application {
         layout.setAlignment(Pos.CENTER);
 
 
-        predictCrimesButton.setOnAction(e-> PredictionChart.display());
-        topFiveArrestsButton.setOnAction(e-> new ArrestsPieChart());
-        buttonForDistrict.setOnAction(e-> CrimeRateInDistrictUI.display());
+        predictCrimesButton.setOnAction(e -> PredictionChart.display());
+        topFiveArrestsButton.setOnAction(e -> new ArrestsPieChart());
+        buttonForDistrict.setOnAction(e -> CrimeRateInDistrictUI.display());
 
-        Scene scene = new Scene(layout,300,100);
+        Scene scene = new Scene(layout, 300, 100);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> {
