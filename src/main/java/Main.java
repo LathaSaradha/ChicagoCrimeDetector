@@ -10,9 +10,6 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    Button predictCrimesButton;
-    Button topFiveArrestsButton;
-    Button buttonForDistrict;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,15 +26,20 @@ public class Main extends Application {
         Scene scene2 = new Scene(vBox2,300,300);
         stage.setScene(scene2);
         //Predict Crimes Using Linear Regression
-       // int predictedCrimes = PredictCrimeInNextYear.predictTotalCrimes();
-       // String message = "Total Number of Predicted Crimes in 2020 are "+predictedCrimes;
-        predictCrimesButton = new Button("Predict Total Number of Crimes in 2020");
-        topFiveArrestsButton = new Button("View Arrests For Top Five Crimes Types");
-        buttonForDistrict = new Button ("Find the crime percentage in a district and year");
+
+
+        Button predictCrimesButton = new Button("Predict Total Number of Crimes in 2020");
+        Button topFiveArrestsButton = new Button("View Arrests For Top Five Crimes Types");
+        Button buttonForDistrict = new Button("Find the crime percentage in a district and year");
+
+        predictCrimesButton.setPrefWidth(270.0);
+        topFiveArrestsButton.setPrefWidth(270.0);
+        buttonForDistrict.setPrefWidth(270.0);
 
         StackPane layout = new StackPane();
         VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(predictCrimesButton,topFiveArrestsButton,buttonForDistrict);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(predictCrimesButton, topFiveArrestsButton, buttonForDistrict);
         layout.getChildren().add(vBox);
         layout.setAlignment(Pos.CENTER);
 

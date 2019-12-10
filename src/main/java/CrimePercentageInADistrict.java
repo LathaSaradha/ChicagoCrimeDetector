@@ -12,8 +12,8 @@ public class CrimePercentageInADistrict
 
         totalCount = getTotalCount(query);
         districtCount = getDistrictCount(year, district);
-        System.out.println(districtCount);
-        System.out.println(totalCount);
+        //System.out.println(districtCount);
+       // System.out.println(totalCount);
         return ((double)districtCount/totalCount) *100;
 
     }
