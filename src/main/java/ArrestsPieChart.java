@@ -53,7 +53,7 @@ public class ArrestsPieChart {
                             .stream()
                             .limit(5)
                             .forEach((e) -> {
-                                System.out.println("getting data" + e);
+                                System.out.println("getting data " + e);
                                 pieChartData.add(new PieChart.Data(e.getKey(), e.getValue()));
                             });
 

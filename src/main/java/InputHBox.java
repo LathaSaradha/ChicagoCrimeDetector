@@ -3,6 +3,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -66,25 +67,46 @@ public class InputHBox extends HBox {
 
         btnMove.setOnAction(event -> {
                     double percent;
+            Stage loaderWindow = null;
                     //System.out.println("inside handle method");
 
                     try {
                         CharSequence districtNum = districtText.getCharacters();
                         CharSequence yearNum = yearText.getCharacters();
-                        int district = Integer.parseInt(districtNum + "");
+                        DecimalFormat df = new DecimalFormat("000");
+                        double num=Double.parseDouble(districtNum+"");
+                        String dNum=df.format(num);
+                        int district = Integer.parseInt( df.format(num));
                         int year = Integer.parseInt(yearNum + "");
+                       // System.out.println(district);
+                       // System.out.println(year);
+                        //districtNum=num;
 
                         if ((district <= 25) && year >= 2001 && year <= 2019) {
-                            percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(districtNum, yearNum);
+
+                             loaderWindow = new Stage();
+                            loaderWindow.setTitle("Fetching Data");
+                            VBox vBox2 = new VBox();
+                            ProgressIndicator progressIndicator = new ProgressIndicator();
+                            vBox2.setAlignment(Pos.CENTER);
+                            Label label = new Label("Please wait while fetching data from City of Chicago data set");
+                            vBox2.getChildren().addAll(progressIndicator,label);
+                            Scene scene2 = new Scene(vBox2);
+                            loaderWindow.setScene(scene2);
+                            loaderWindow.show();
+                            
+                            
+                            percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(dNum, yearNum+"");
+                            loaderWindow.close();
                             displayResultDialogueBox(districtNum, yearNum, percent);
                         } else {
                             JFrame f = new JFrame();
                             JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
                         }
 
-                    } catch (StringIndexOutOfBoundsException | IllegalArgumentException s) {
+                    } catch (StringIndexOutOfBoundsException | IllegalArgumentException |NullPointerException s) {
                         JFrame f = new JFrame();
-                        JOptionPane.showMessageDialog(f, "Invalid Choice. \n");
+                        JOptionPane.showMessageDialog(f, "Enter Valid Values. \n");
 
                     }
 
