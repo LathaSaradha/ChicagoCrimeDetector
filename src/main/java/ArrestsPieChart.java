@@ -9,6 +9,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class ArrestsPieChart {
         vBox2.getChildren().addAll(progressIndicator,label);
         Scene scene2 = new Scene(vBox2);
         loaderWindow.setScene(scene2);
+        loaderWindow.initStyle(StageStyle.UNDECORATED);
         loaderWindow.show();
 
 
@@ -67,10 +69,8 @@ public class ArrestsPieChart {
                 ()->{
                     while (thread.isAlive())
                     {
-                        System.out.println("alive");
                     }
-                    System.out.println(pieChartData);
-                    System.out.println(totalArrestsInTopFive[0]);
+
                     Platform.runLater(()->{
                         //Pie chart
                         Stage window = new Stage();
@@ -93,6 +93,7 @@ public class ArrestsPieChart {
                 }
         );
         thread1.start();
+
 
     }
 

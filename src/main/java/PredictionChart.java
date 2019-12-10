@@ -10,6 +10,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class PredictionChart
@@ -26,6 +27,7 @@ public class PredictionChart
         vBox2.getChildren().addAll(progressIndicator,label);
         Scene scene2 = new Scene(vBox2);
         loaderWindow.setScene(scene2);
+        loaderWindow.initStyle(StageStyle.UNDECORATED);
         loaderWindow.show();
 
         //Bar Graph

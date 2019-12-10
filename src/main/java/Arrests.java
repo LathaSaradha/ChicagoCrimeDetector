@@ -4,13 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Arrests implements Wait {
     private Map<String, Integer> arrests;
 
-    public Map<String, Integer> getArrests() {
+    public  Map<String, Integer> getArrests() {
         return arrests;
     }
 
@@ -37,24 +36,37 @@ public class Arrests implements Wait {
         return crimeTypes;
     }
 
-    public void generateArrestCounts() {
+    public void generateArrestCounts()  {
         String queryFirstPart = "$select=count(id) as arrests where primary_type=\"";
         String queryLastPart = "\" and arrest=true";
-
-        ExecutorService service = null;
-        try {
-            service = Executors.newFixedThreadPool(50);
-            for (String crimeType : getCrimeTypes()) {
-                service.submit(() -> {
-                    Reader reader = this.sendQuery(queryFirstPart + crimeType + queryLastPart);
-                    generateArrestCountsHelper(reader, crimeType);
-                });
-
+        getCrimeTypes().forEach(e->{
+            Thread thread = new Thread(()->{
+                Reader reader = this.sendQuery(queryFirstPart + e + queryLastPart);
+                generateArrestCountsHelper(reader, e);
+            });
+           thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
-        } finally {
-            //Using of abstract method in Wait interface.
-            wait(service, 4);
-        }
+        });
+
+//        ExecutorService service;
+//        service = Executors.newFixedThreadPool(30);
+//
+//        try {
+//           service = Executors.newSingleThreadExecutor();
+//            for (String crimeType : getCrimeTypes()) {
+//                service.submit(() -> {
+//                    Reader reader = this.sendQuery(queryFirstPart + crimeType + queryLastPart);
+//                    generateArrestCountsHelper(reader, crimeType);
+//                });
+//            }
+//            service.shutdown();
+//        } finally {
+//            wait(service, 1);
+//        }
     }
 
     public void generateArrestCountsHelper(Reader reader, String crimeType) {

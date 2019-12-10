@@ -16,7 +16,7 @@ public class CrimeRateInDistrictUI
         InputHBox hb = new InputHBox();
         area.setMaxHeight(25.0);
 
-        area.appendText("Please enter District num between 001 and 025.\n Enter the Year from 2001 to 2019. ");
+        area.appendText("Please enter district number between 001 and 025.\n Enter the Year from 2001 to 2019. ");
 
         VBox layout= new VBox();
         layout.getChildren().addAll(area,hb);

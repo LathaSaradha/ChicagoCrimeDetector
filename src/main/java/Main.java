@@ -42,9 +42,7 @@ public class Main extends Application {
         layout.setAlignment(Pos.CENTER);
 
 
-        predictCrimesButton.setOnAction(e-> {
-            PredictionChart.display();
-        });
+        predictCrimesButton.setOnAction(e-> PredictionChart.display());
        // predictCrimesButton.setOnAction(e->PredictionChart.display());
         topFiveArrestsButton.setOnAction(e-> new ArrestsPieChart());
         buttonForDistrict.setOnAction(e-> CrimeRateInDistrictUI.display());

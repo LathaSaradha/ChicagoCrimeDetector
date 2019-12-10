@@ -3,7 +3,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,7 +66,7 @@ public class InputHBox extends HBox {
 
         btnMove.setOnAction(event -> {
                     double percent;
-            Stage loaderWindow = null;
+            Stage loaderWindow;
                     //System.out.println("inside handle method");
 
                     try {
@@ -83,21 +82,7 @@ public class InputHBox extends HBox {
                         //districtNum=num;
 
                         if ((district <= 25) && year >= 2001 && year <= 2019) {
-
-                             loaderWindow = new Stage();
-                            loaderWindow.setTitle("Fetching Data");
-                            VBox vBox2 = new VBox();
-                            ProgressIndicator progressIndicator = new ProgressIndicator();
-                            vBox2.setAlignment(Pos.CENTER);
-                            Label label = new Label("Please wait while fetching data from City of Chicago data set");
-                            vBox2.getChildren().addAll(progressIndicator,label);
-                            Scene scene2 = new Scene(vBox2);
-                            loaderWindow.setScene(scene2);
-                            loaderWindow.show();
-                            
-                            
-                            percent = PredictCrimeInNextYear.numberofCrimesInaDistrict(dNum, yearNum+"");
-                            loaderWindow.close();
+                            percent = CrimePercentageInADistrict.numberofCrimesInaDistrict(dNum, yearNum+"");
                             displayResultDialogueBox(districtNum, yearNum, percent);
                         } else {
                             JFrame f = new JFrame();

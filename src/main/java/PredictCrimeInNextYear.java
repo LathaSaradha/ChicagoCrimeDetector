@@ -39,7 +39,7 @@ public class PredictCrimeInNextYear implements Wait {
         TreeMap<Integer,Integer> totalCrimes= new TreeMap<>();
         ExecutorService service= null;
         try {
-            service = Executors.newFixedThreadPool(50);
+            service = Executors.newFixedThreadPool(10);
             for (int i = minYear; i <= maxYear; i++) {
                 String totalCrimesQuery = "$select=count(id) as total_crime where year=" + i;
                 int finalI = i;
@@ -83,45 +83,6 @@ public class PredictCrimeInNextYear implements Wait {
         return (int) linearRegression.predict(2020);
 
     }
-
-    public static double numberofCrimesInaDistrict(String districtNum, String yearNum) {
-
-        int totalCount,districtCount;
-        System.out.println("District : "+districtNum +"  Year: "+yearNum);
-        //String year= yearNum+"";
-        //String district= districtNum+"";
-        String query = "$select=count(*) as total_count where year="+yearNum;
-
-        totalCount = getTotalCount(query);
-        districtCount = getDistrictCount(yearNum, districtNum);
-        //System.out.println(districtCount);
-        //System.out.println(totalCount);
-        return ((double)districtCount/totalCount) *100;
-
-    }
-
-    public static int getDistrictCount(String year, String district) {
-        String query;
-        int districtCount;
-        SendHttpRequest httpRequest;
-        Reader reader;
-
-        query = "$select=count(*) as total_count_district where year="+year+" and District=\""+district+"\"";
-        httpRequest = new SendHttpRequest(query);
-        reader = httpRequest.sendHttpRequest();
-
-        districtCount = JsonParser.crimeCounter(reader,"total_count_district");
-        return districtCount;
-    }
-
-    public static int getTotalCount(String query) {
-        int totalCount;
-        SendHttpRequest httpRequest = new SendHttpRequest(query);
-        Reader reader = httpRequest.sendHttpRequest();
-        totalCount = JsonParser.crimeCounter(reader,"total_count");
-        return totalCount;
-    }
-
 
 
     @Override
