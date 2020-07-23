@@ -50,7 +50,7 @@ public class PredictCrimeInNextYear implements Wait {
             }
             totalCrimesInEachYear = totalCrimes;
         } finally {
-            wait(service, 8);
+            wait(service, 10);
         }
 
 
@@ -81,10 +81,7 @@ public class PredictCrimeInNextYear implements Wait {
 
     @Override
     public void wait(ExecutorService service, int seconds) {
-        service.shutdown();
         try {
-
-
             if (service != null) {
                 service.awaitTermination(seconds, TimeUnit.SECONDS);
 
@@ -97,5 +94,5 @@ public class PredictCrimeInNextYear implements Wait {
             e.printStackTrace();
         }
 
-    }}
-
+    }
+}
