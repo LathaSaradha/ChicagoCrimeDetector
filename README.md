@@ -39,13 +39,13 @@ To view your project directory structure, go to View?Tool Windows?Project. You w
 “Main.java” file is the java file that contains the ‘main’ method for the application.
 
 In the build.gradle file, following dependencies, need to be added:
-? testCompile group: 'junit', name: 'junit', version: '4.12'
-? compile 'com.squareup.okhttp3:okhttp:3.4.1'
-? compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+1. testCompile group: 'junit', name: 'junit', version: '4.12'
+2. compile 'com.squareup.okhttp3:okhttp:3.4.1'
+3. compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 Also in the plugins pls add the following
-? id 'java'
-? id 'application'
-? id 'org.openjfx.javafxplugin' version '0.0.8'
+4. id 'java'
+5. id 'application'
+6. id 'org.openjfx.javafxplugin' version '0.0.8'
 
 Gradle-wrapper.properties must be added the following line
 1. distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.2-all.zip
@@ -79,10 +79,11 @@ To view the crime rate in a particular district and particular year select third
 
 The result will be shown as below.
 
-![Test Image 4](Input Entry.png)
+![Test Image 4](Input_Entry.png)
 
 For invalid inputs, the warning message will be as follows.
 
+![Test Image 5](Input_Entry_Result.png)
 
 ## Authors
 
@@ -91,11 +92,13 @@ Latha Saradha
 Sai Krishna
 
 ## Acknowledgements/Reference
-? Chicago Data Portal,
+1.  Chicago Data Portal,
        https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2/data
-? SODA Developers, Crimes - 2001 to Present, https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2
-? SODA Developers, API Endpoints,https://dev.socrata.com/docs/endpoints.html 
-? 
+       
+2.  SODA Developers, Crimes - 2001 to Present, https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2
+
+3. SODA Developers, API Endpoints,https://dev.socrata.com/docs/endpoints.html 
+
 
 
 
