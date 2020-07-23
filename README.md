@@ -1,8 +1,9 @@
 # ChicagoCrimeDetector
 
 Instructions to run the Project
-# ${1: Alpha Project}
-Project Description: Crime Detector is a systematic approach for identifying the patterns and trends of crimes happened in Chicago since 2001.
+
+Project Description: 
+Crime Detector is a systematic approach for identifying the patterns and trends of crimes happened in Chicago since 2001.
 
 ## Installation
 Install your choice of IDE, which supports Java 11. Install the Java 11 package according to the system specifications. The following guidelines are based on IDE IntelliJ and Java 11.
