@@ -77,7 +77,6 @@ public class PredictCrimeInNextYear implements Wait {
         return (int) linearRegression.predict(2020);
 
     }
-
     @Override
     public void wait(ExecutorService service, int seconds) {
         try {
