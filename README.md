@@ -62,6 +62,8 @@ The application will be run successfully.
 In our application, the testing is done by the user.
 Run the application as specified above instructions.
 The below dialogue box will be displayed.
+
+
 ![Test Image 1](Menu.png)
 
 To predict the total number of crimes in 2020 select the first button.
