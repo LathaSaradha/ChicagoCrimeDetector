@@ -2,7 +2,7 @@
 
 Instructions to run the Project
 
-Project Description: 
+## Project Description: 
 Crime Detector is a systematic approach for identifying the patterns and trends of crimes happened in Chicago since 2001.
 
 ## Installation
