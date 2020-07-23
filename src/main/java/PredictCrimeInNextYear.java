@@ -78,7 +78,6 @@ public class PredictCrimeInNextYear implements Wait {
 
     }
 
-
     @Override
     public void wait(ExecutorService service, int seconds) {
         try {
