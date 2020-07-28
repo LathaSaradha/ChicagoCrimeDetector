@@ -64,28 +64,31 @@ Run the application as specified above instructions.
 The below dialogue box will be displayed.
 
 
-![Test Image 1](Menu.png)
+![Test Image 1](Screenshots/Menu.png)
 
 To predict the total number of crimes in 2020 select the first button.
 The results are shown in bar graph form as below.
-![Test Image 2](Prediction_2020.png)
+![Test Image 2](Screenshots/Prediction_2020.png)
 
 To view, the pie chart of arrests for the top 5 crime types in Chicago click the second button.
 
 The results will be as below.
 
-![Test Image 3](Graph.png)
+![Test Image 3](Screenshots/Graph.png)
 
 To view the crime rate in a particular district and particular year select third button.
 
 
 The result will be shown as below.
 
-![Test Image 4](Input_Entry.png)
+![Test Image 4](Screenshots/Input_Entry.png)
+
+![Test Image 5](Screenshots/Input_Entry_Result.png)
+
 
 For invalid inputs, the warning message will be as follows.
 
-![Test Image 5](Input_Entry_Result.png)
+![Test Image 5](Screenshots/Sample_Warning_Message.png)
 
 ## Authors
 
