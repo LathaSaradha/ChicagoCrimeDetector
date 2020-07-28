@@ -15,13 +15,13 @@ Change the JAVA_HOME environment variable to that of JAVA 11 JDK.
 ## Usage
 Download all the java files in this repository as a zipped file. Unzip the folder in your local.
 
-Open IntelliJ. Choose ”Import project” and select the unzipped project ?le folder (the one that contains all of the ?les). 
+Open IntelliJ. Choose ”Import project” and select the unzipped project file folder (the one that contains all of the files). 
 Choose ”Import project from external model”, select Gradle and click Next. 
-The Gradle project name/location should be ?lled in of your choice.
+The Gradle project name/location should be filled in of your choice.
 
 The checkbox ”Create separate module per source set” should be checked and the radio button for ”Use default Gradle wrapper (recommended)” should also be selected. Make sure that the Gradle JVM isusingJava11. 
 
-If not, you will either need to select that version or navigate to the JDK and ?nd it (see possible locations below): 
+If not, you will either need to select that version or navigate to the JDK and find it (see possible locations below): 
 
 Mac users: /Library/Java/JavaVirtualMachines/jdk-11.0.4.jdk/Contents/Home Windows users (probably): C:\Program Files\Java\jdk-11\bin” 
 Click Finish.
@@ -32,9 +32,9 @@ All of the above changes will be imported.
 
 To enable ‘Gradle’ as the TestRunner, In Mac go to Intellij Idea -> Preferences. (next to File on the left), in windows go to File-> Settings. Then go to Build, Execution, and Deployment. Click on Gradle. Look for Delegate settings (beneath Gradle JVM). Choose Build and run using Gradle (not IntelliJ Idea) and choose Run tests using Gradle (not IntelliJ Idea). Click ok. 
 
-To view your project directory structure, go to View?Tool Windows?Project. You will see your project directory structure on the left-hand side of the screen.
+To view your project directory structure, go to View->Tool Windows->Project. You will see your project directory structure on the left-hand side of the screen.
 
- All the Java code/?les must be created inside the src?main?java folder.
+ All the Java code files must be created inside the src/main/java folder.
 
 “Main.java” file is the java file that contains the ‘main’ method for the application.
 
